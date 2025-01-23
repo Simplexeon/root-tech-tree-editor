@@ -1,27 +1,42 @@
-[gd_scene load_steps=6 format=3 uid="uid://ce1f0kuejodj1"]
+[gd_scene load_steps=7 format=3 uid="uid://ce1f0kuejodj1"]
 
 [ext_resource type="Texture2D" uid="uid://d4g4o1cbuxjuh" path="res://icon.svg" id="1_3w6f0"]
 [ext_resource type="Script" path="res://Nodes/Entities/Player/player.gd" id="1_m4suu"]
 [ext_resource type="PackedScene" uid="uid://dqto8hvmjc00y" path="res://Nodes/Entities/Player/Camera/camera.tscn" id="3_728lh"]
 
-[sub_resource type="Curve2D" id="Curve2D_amtwq"]
+[sub_resource type="Curve" id="Curve_slsdp"]
+bake_resolution = 150
+_data = [Vector2(0, 0.714286), 0.0, 0.195605, 0, 0, Vector2(0.359551, 1), -0.139718, -0.139718, 0, 0, Vector2(0.691011, 0.758242), -1.10341, -1.10341, 0, 0, Vector2(1, 0.175824), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_0jsga"]
+max_value = 4.0
+bake_resolution = 150
+_data = [Vector2(0, 0), 0.0, 3.66758, 0, 0, Vector2(0.235955, 1.53846), 3.45184, 3.45184, 0, 0, Vector2(0.511236, 0.351648), 0.0, 0.0, 0, 0, Vector2(0.752809, 1.23077), -2.8254, -2.8254, 0, 0, Vector2(1, 0), -7.61828, 0.0, 0, 0]
+point_count = 5
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ips3"]
-size = Vector2(64, 64)
+size = Vector2(40, 40)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_m4suu")
-Acceleration = SubResource("Curve2D_amtwq")
+Acceleration = 120.0
+AccelerationRamp = SubResource("Curve_slsdp")
+TargetSpeed = 150.0
+Friction = SubResource("Curve_0jsga")
 MouseSensitivity = 0.656
+MaxViewDistance = 250.0
+CameraSmoothing = 2.81104
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.35, 0.35)
 texture = ExtResource("1_3w6f0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_8ips3")
 
 [node name="Crosshair" type="Node2D" parent="."]
+top_level = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Crosshair"]
 modulate = Color(0.14116, 0.571392, 3.85046e-07, 0.796078)
