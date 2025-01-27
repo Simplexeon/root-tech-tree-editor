@@ -1,34 +1,20 @@
-[gd_scene load_steps=7 format=3 uid="uid://ce1f0kuejodj1"]
+[gd_scene load_steps=5 format=3 uid="uid://ce1f0kuejodj1"]
 
 [ext_resource type="Texture2D" uid="uid://d4g4o1cbuxjuh" path="res://icon.svg" id="1_3w6f0"]
 [ext_resource type="Script" path="res://Nodes/Entities/Player/player.gd" id="1_m4suu"]
 [ext_resource type="PackedScene" uid="uid://dqto8hvmjc00y" path="res://Nodes/Entities/Player/Camera/camera.tscn" id="3_728lh"]
-
-[sub_resource type="Curve" id="Curve_slsdp"]
-max_value = 2.0
-bake_resolution = 150
-_data = [Vector2(0, 1.78022), 0.0, -2.30438, 0, 0, Vector2(0.275281, 1.16484), -2.06274, -2.06274, 0, 0, Vector2(0.58427, 0.725275), -1.10341, -1.10341, 0, 0, Vector2(1, 0.32967), -1.25746, 0.0, 0, 0]
-point_count = 4
-
-[sub_resource type="Curve" id="Curve_0jsga"]
-bake_resolution = 150
-_data = [Vector2(0, 0), 0.0, 4.4011, 0, 0, Vector2(0.252809, 0.659341), 1.25387, 1.25387, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 3
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ips3"]
 size = Vector2(40, 40)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_m4suu")
-Acceleration = 80.0
-AccelerationRamp = SubResource("Curve_slsdp")
-TargetSpeed = 120.0
-Friction = SubResource("Curve_0jsga")
-MaxFriction = 300.0
-TurningPoint = -0.666
+Acceleration = 2.0
+TargetSpeed = 160.0
+Friction = 4.0
 MouseSensitivity = 0.856
 MouseRange = 250.0
-MaxViewDistance = 300.0
+MaxViewDistance = 380.0
 CameraSmoothing = 2.81104
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

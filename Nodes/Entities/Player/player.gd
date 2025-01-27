@@ -4,12 +4,9 @@ class_name Player2D
 # Parameters
 
 @export_subgroup("Movement")
-@export var Acceleration : float;
-@export var AccelerationRamp : Curve;
+@export_range(0.5, 5) var Acceleration : float;
 @export var TargetSpeed : float;
-@export var Friction : Curve;
-@export var MaxFriction : float;
-@export_range(-1.0, 1.0) var TurningPoint : float;
+@export_range(0.5, 5) var Friction : float;
 
 @export_subgroup("Controls")
 @export_range(0.05, 5.0) var MouseSensitivity : float;
@@ -21,6 +18,12 @@ class_name Player2D
 @export_exp_easing("attenuation") var CameraSmoothing : float;
 
 
+# Data
+
+var last_pos : Vector2;
+
+
+
 # Components
 
 @onready var Camera : Camera2D = $Camera;
@@ -29,11 +32,6 @@ class_name Player2D
 
 
 # Processes
-
-func _ready() -> void:
-	
-	AccelerationRamp.bake();
-	Friction.bake();
 
 
 func _input(event: InputEvent) -> void:
@@ -64,6 +62,10 @@ func _physics_process(delta: float) -> void:
 	Crosshair.global_position = global_position + (mouse_vect.normalized() * min(mouse_vect.length(), MouseRange));
 	
 	process_movement(delta);
+	
+	Crosshair.global_position += global_position - last_pos;
+	
+	last_pos = global_position;
 
 
 # Functions
@@ -90,19 +92,10 @@ func process_movement(delta : float) -> void:
 		move_dir.x += 1;
 	move_dir = move_dir.normalized();
 	
-	
+	var accel = Acceleration;
 	if(move_dir == Vector2.ZERO):
-		move_dir = (velocity * -1).normalized();
+		accel = Friction;
 	
-	#var friction_amount : float = 1 - ((move_dir.dot(velocity.normalized()) + 1) / 2);
-	
-	var force : float = AccelerationRamp.sample_baked(min(velocity.length() / TargetSpeed, 1.0)) * Acceleration * delta;
-	var target_velocity : Vector2 = velocity + (move_dir * force);
-	
-	if(target_velocity.normalized().dot(velocity.normalized()) <= TurningPoint and velocity != Vector2.ZERO):
-		velocity = Vector2.ZERO;
-	else:
-		velocity = target_velocity;
-	
+	velocity = lerp(velocity, move_dir * TargetSpeed, accel * delta);
 	
 	move_and_slide();
