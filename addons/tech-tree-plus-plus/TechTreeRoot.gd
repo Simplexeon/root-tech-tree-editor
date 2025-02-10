@@ -7,7 +7,7 @@ class_name TechTreeRoot
 
 # Data
 
-var base_nodes : Array[Object] = [];
+var base_nodes : Array[TechTreeNode] = [];
 
 
 # Processes
