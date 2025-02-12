@@ -7,24 +7,8 @@ extends Camera2D
 @export var Sensitivity : float = 1.0;
 
 
-# Data
-
-var dragging : bool = false;
-
-
 
 # Processes
 
-func _input(event: InputEvent) -> void:
-	if(event is InputEventMouseButton):
-		if(event.button_index == 1 and event.pressed):
-			if(!dragging):
-				#dragging = true;
-				pass;
-		
-		if(event.button_index == 1 and event.is_released()):
-			if(dragging):
-				dragging = false;
-	
-	if(event is InputEventMouseMotion and dragging):
-		global_position += event.relative * Sensitivity * -1;
+func _on_mouse_drag(relative_pos : Vector2) -> void:
+	global_position += relative_pos * Sensitivity * -1;
