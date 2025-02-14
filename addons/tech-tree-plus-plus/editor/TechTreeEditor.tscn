@@ -4,10 +4,10 @@
 [ext_resource type="Theme" uid="uid://b8ncg82ykmq8w" path="res://addons/tech-tree-plus-plus/assets/tech_tree_overlay_theme.tres" id="1_ptwip"]
 [ext_resource type="Script" path="res://addons/tech-tree-plus-plus/editor/mouse_movement.gd" id="2_6ycqj"]
 [ext_resource type="Script" path="res://addons/tech-tree-plus-plus/editor/create_node_button.gd" id="2_ywl80"]
-[ext_resource type="Texture2D" uid="uid://bjtfv4d2f6qxk" path="res://addons/tech-tree-plus-plus/core_icon.svg" id="3_meqnc"]
+[ext_resource type="PackedScene" uid="uid://bbm235n36jt8n" path="res://addons/tech-tree-plus-plus/editor/node-settings/TechTreeNodeSettings.tscn" id="4_3l6cd"]
 [ext_resource type="Script" path="res://addons/tech-tree-plus-plus/editor/editor_camera.gd" id="4_atmrf"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_yrvvd"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_1snsr"]
 viewport_path = NodePath("GraphArea/TreeViewport")
 
 [node name="TechTreeEditor" type="Control"]
@@ -28,7 +28,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 0
-texture = SubResource("ViewportTexture_yrvvd")
+texture = SubResource("ViewportTexture_1snsr")
 expand_mode = 1
 stretch_mode = 4
 script = ExtResource("1_lcllu")
@@ -62,25 +62,11 @@ mouse_filter = 1
 mouse_default_cursor_shape = 13
 script = ExtResource("2_6ycqj")
 
-[node name="Sprite2D" type="Sprite2D" parent="GraphArea/TreeViewport/Area"]
-position = Vector2(108, 156)
-texture = ExtResource("3_meqnc")
-
-[node name="Sprite2D2" type="Sprite2D" parent="GraphArea/TreeViewport/Area"]
-position = Vector2(390, 166)
-texture = ExtResource("3_meqnc")
-
-[node name="Sprite2D3" type="Sprite2D" parent="GraphArea/TreeViewport/Area"]
-position = Vector2(691, 126)
-texture = ExtResource("3_meqnc")
-
-[node name="Sprite2D4" type="Sprite2D" parent="GraphArea/TreeViewport/Area"]
-position = Vector2(192, 354)
-texture = ExtResource("3_meqnc")
-
-[node name="Sprite2D5" type="Sprite2D" parent="GraphArea/TreeViewport/Area"]
-position = Vector2(557, 339)
-texture = ExtResource("3_meqnc")
+[node name="TechTreeNodeSettings" parent="GraphArea/TreeViewport/Area" instance=ExtResource("4_3l6cd")]
+offset_left = 500.0
+offset_top = 500.0
+offset_right = 818.0
+offset_bottom = 630.0
 
 [node name="Overlay" type="Control" parent="."]
 layout_mode = 1

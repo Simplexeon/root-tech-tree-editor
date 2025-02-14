@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://ce1f0kuejodj1"]
+[gd_scene load_steps=6 format=3 uid="uid://ce1f0kuejodj1"]
 
 [ext_resource type="Texture2D" uid="uid://d4g4o1cbuxjuh" path="res://icon.svg" id="1_3w6f0"]
 [ext_resource type="Script" path="res://Nodes/Entities/Player/player.gd" id="1_m4suu"]
 [ext_resource type="PackedScene" uid="uid://dqto8hvmjc00y" path="res://Nodes/Entities/Player/Camera/camera.tscn" id="3_728lh"]
+[ext_resource type="Script" path="res://addons/tech-tree-plus-plus/TechTreeRoot.gd" id="4_cuo2j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ips3"]
 size = Vector2(40, 40)
@@ -33,3 +34,8 @@ scale = Vector2(0.2, 0.2)
 texture = ExtResource("1_3w6f0")
 
 [node name="Camera" parent="." instance=ExtResource("3_728lh")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TechTreeRoot" type="Node" parent="CanvasLayer"]
+script = ExtResource("4_cuo2j")

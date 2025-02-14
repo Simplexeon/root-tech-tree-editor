@@ -1,0 +1,83 @@
+[gd_scene load_steps=2 format=3 uid="uid://bbm235n36jt8n"]
+
+[ext_resource type="Theme" uid="uid://b8ncg82ykmq8w" path="res://addons/tech-tree-plus-plus/assets/tech_tree_overlay_theme.tres" id="1_i6wqs"]
+
+[node name="TechTreeNodeSettings" type="PanelContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(100, 100)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme = ExtResource("1_i6wqs")
+
+[node name="SettingsContent" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Title" type="RichTextLabel" parent="MarginContainer/SettingsContent"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=cyan]Node Title[/color]"
+fit_content = true
+scroll_active = false
+
+[node name="Tiers" type="HBoxContainer" parent="MarginContainer/SettingsContent"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/SettingsContent/Tiers"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+size_flags_stretch_ratio = 2.0
+text = "Tiers:"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="SpinBox" type="SpinBox" parent="MarginContainer/SettingsContent/Tiers"]
+layout_mode = 2
+size_flags_horizontal = 10
+alignment = 1
+
+[node name="UnlockRequirement" type="HBoxContainer" parent="MarginContainer/SettingsContent"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/SettingsContent/UnlockRequirement"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_stretch_ratio = 2.0
+text = "Unlock Requirement: "
+fit_content = true
+autowrap_mode = 0
+
+[node name="Spacer" type="Control" parent="MarginContainer/SettingsContent/UnlockRequirement"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="UnlockDropdown" type="OptionButton" parent="MarginContainer/SettingsContent/UnlockRequirement"]
+layout_mode = 2
+size_flags_horizontal = 10
+selected = 0
+item_count = 3
+popup/item_0/text = "One Parent"
+popup/item_1/text = "All Parents"
+popup/item_1/id = 1
+popup/item_2/text = "Tree Progress"
+popup/item_2/id = 2
+
+[node name="ProgressRequirement" type="HBoxContainer" parent="MarginContainer/SettingsContent"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/SettingsContent/ProgressRequirement"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+size_flags_stretch_ratio = 2.0
+text = "Progress Requirement: "
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="SpinBox" type="SpinBox" parent="MarginContainer/SettingsContent/ProgressRequirement"]
+layout_mode = 2
+size_flags_horizontal = 10
+alignment = 1
