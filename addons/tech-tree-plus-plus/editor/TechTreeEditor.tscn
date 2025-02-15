@@ -1,14 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://ctxj5cxwp61kp"]
+[gd_scene load_steps=5 format=3 uid="uid://ctxj5cxwp61kp"]
 
 [ext_resource type="Script" path="res://addons/tech-tree-plus-plus/editor/graph_area.gd" id="1_lcllu"]
 [ext_resource type="Theme" uid="uid://b8ncg82ykmq8w" path="res://addons/tech-tree-plus-plus/assets/tech_tree_overlay_theme.tres" id="1_ptwip"]
-[ext_resource type="Script" path="res://addons/tech-tree-plus-plus/editor/mouse_movement.gd" id="2_6ycqj"]
+[ext_resource type="PackedScene" uid="uid://bj23tbkrglk4v" path="res://addons/tech-tree-plus-plus/editor/viewport-area.tscn" id="2_qxfyu"]
 [ext_resource type="Script" path="res://addons/tech-tree-plus-plus/editor/create_node_button.gd" id="2_ywl80"]
-[ext_resource type="PackedScene" uid="uid://bbm235n36jt8n" path="res://addons/tech-tree-plus-plus/editor/node-settings/TechTreeNodeSettings.tscn" id="4_3l6cd"]
-[ext_resource type="Script" path="res://addons/tech-tree-plus-plus/editor/editor_camera.gd" id="4_atmrf"]
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_1snsr"]
-viewport_path = NodePath("GraphArea/TreeViewport")
 
 [node name="TechTreeEditor" type="Control"]
 layout_mode = 3
@@ -20,7 +15,7 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="GraphArea" type="TextureRect" parent="." node_paths=PackedStringArray("TreeViewport")]
+[node name="GraphArea" type="SubViewportContainer" parent="." node_paths=PackedStringArray("TreeViewport")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,45 +23,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 0
-texture = SubResource("ViewportTexture_1snsr")
-expand_mode = 1
-stretch_mode = 4
 script = ExtResource("1_lcllu")
 TreeViewport = NodePath("TreeViewport")
 
 [node name="TreeViewport" type="SubViewport" parent="GraphArea"]
+handle_input_locally = false
 size = Vector2i(1080, 720)
 render_target_update_mode = 4
 
-[node name="Area" type="Node2D" parent="GraphArea/TreeViewport"]
-
-[node name="EditorCamera" type="Camera2D" parent="GraphArea/TreeViewport/Area"]
-position = Vector2(321, 177)
-position_smoothing_enabled = true
-script = ExtResource("4_atmrf")
-
-[node name="MouseMovement" type="Control" parent="GraphArea/TreeViewport/Area/EditorCamera"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -321.0
-offset_top = -177.0
-offset_right = -321.0
-offset_bottom = -177.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-mouse_filter = 1
-mouse_default_cursor_shape = 13
-script = ExtResource("2_6ycqj")
-
-[node name="TechTreeNodeSettings" parent="GraphArea/TreeViewport/Area" instance=ExtResource("4_3l6cd")]
-offset_left = 500.0
-offset_top = 500.0
-offset_right = 818.0
-offset_bottom = 630.0
+[node name="Area" parent="GraphArea/TreeViewport" instance=ExtResource("2_qxfyu")]
 
 [node name="Overlay" type="Control" parent="."]
 layout_mode = 1
@@ -75,7 +40,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+mouse_filter = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="Overlay"]
 layout_mode = 1
@@ -122,5 +87,4 @@ text = "Add Node"
 script = ExtResource("2_ywl80")
 
 [connection signal="resized" from="GraphArea" to="GraphArea" method="_on_resized"]
-[connection signal="mouse_drag" from="GraphArea/TreeViewport/Area/EditorCamera/MouseMovement" to="GraphArea/TreeViewport/Area/EditorCamera" method="_on_mouse_drag"]
 [connection signal="pressed" from="Overlay/PanelContainer/Menu/CreateNodeButton" to="Overlay/PanelContainer/Menu/CreateNodeButton" method="_on_pressed"]

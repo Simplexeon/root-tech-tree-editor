@@ -19,7 +19,7 @@ var dragging : bool = false :
 
 # Processes
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if(event is InputEventMouseButton):
 		if(event.button_index == 1 and event.pressed):
 			if(!dragging):

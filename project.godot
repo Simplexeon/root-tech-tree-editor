@@ -24,10 +24,6 @@ window/stretch/aspect="ignore"
 window/stretch/scale=2.0
 window/stretch/scale_mode="integer"
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/tech-tree-plus-plus/plugin.cfg")
-
 [input]
 
 up={
