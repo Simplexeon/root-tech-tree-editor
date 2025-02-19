@@ -62,30 +62,6 @@ NodeEditorScene = ExtResource("4_p06f2")
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Overlay/Toolkit/Menu"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-bbcode_enabled = true
-text = "This is a text box"
-fit_content = true
-scroll_active = false
-
-[node name="RichTextLabel2" type="RichTextLabel" parent="Overlay/Toolkit/Menu"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-bbcode_enabled = true
-text = "Separate box, saying hello this time with multiple lines."
-fit_content = true
-scroll_active = false
-
-[node name="RichTextLabel3" type="RichTextLabel" parent="Overlay/Toolkit/Menu"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-bbcode_enabled = true
-text = "Editing Menu:"
-fit_content = true
-scroll_active = false
-
 [node name="CreateNodeButton" type="Button" parent="Overlay/Toolkit/Menu"]
 layout_mode = 2
 theme = ExtResource("1_ptwip")
