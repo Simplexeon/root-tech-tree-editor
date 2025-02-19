@@ -28,6 +28,7 @@ layout_mode = 2
 layout_mode = 2
 mouse_default_cursor_shape = 2
 action_mode = 0
+keep_pressed_outside = true
 text = "::::"
 script = ExtResource("4_8yxap")
 

@@ -33,4 +33,3 @@ func _on_drag_tab_button_down() -> void:
 
 func _on_drag_tab_button_up() -> void:
 	dragging = false;
-
