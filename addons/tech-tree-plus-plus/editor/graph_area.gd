@@ -13,6 +13,9 @@ var mouse_over : bool = false;
 
 # Processes
 
+func _ready() -> void:
+	randomize();
+
 func is_editor_hint() -> bool:
 	return false;
 

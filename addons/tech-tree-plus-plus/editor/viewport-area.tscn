@@ -6,10 +6,10 @@
 [node name="Area" type="Node2D"]
 
 [node name="GridBG" type="TextureRect" parent="."]
-offset_left = -2751.0
-offset_top = -1571.0
-offset_right = 2882.0
-offset_bottom = 1823.0
+offset_left = -6884.0
+offset_top = -4332.0
+offset_right = 6894.0
+offset_bottom = 4383.0
 mouse_filter = 2
 texture = ExtResource("1_dtfsi")
 stretch_mode = 1

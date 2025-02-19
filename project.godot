@@ -32,6 +32,10 @@ enabled=PackedStringArray("res://addons/tech-tree-plus-plus/plugin.cfg")
 
 GTechTreeConnector=""
 
+[gui]
+
+theme/default_font_generate_mipmaps=true
+
 [input]
 
 up={
