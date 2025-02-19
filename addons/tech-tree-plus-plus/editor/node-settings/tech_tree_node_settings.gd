@@ -64,11 +64,14 @@ func setup(index : int) -> void:
 	
 	if(ParentConnectorContainer):
 		for connector in ParentConnectorContainer.get_children():
-			connector.parent_id = index;
+			connector.setup(TechTreeEditorConnector.ConnectorType.Parent, data.index, self);
+			connector.connect_with.connect(connect_with);
+			connector.disconnect_from.connect(disconnect_from);
 
-func _on_drag_tab_move(relative:Vector2) -> void:
-	position += relative * (1.0 / zoom.x);
+func _on_drag_tab_move(relative : Vector2) -> void:
+	global_position += relative * (1.0 / zoom.x);
 	
+
 
 # Functions
 
@@ -76,7 +79,9 @@ func add_parent_connector() -> void:
 	
 	if(ConnectorFile.can_instantiate() and ParentConnectorContainer):
 		var connector : TechTreeEditorConnector = ConnectorFile.instantiate();
-		connector.setup(TechTreeEditorConnector.ConnectorType.Parent, data.index);
+		connector.setup(TechTreeEditorConnector.ConnectorType.Parent, data.index, self);
+		connector.connect_with.connect(connect_with);
+		connector.disconnect_from.connect(disconnect_from);
 		
 		ParentConnectorContainer.add_child(connector);
 	
@@ -86,10 +91,32 @@ func add_child_connector() -> void:
 	
 	if(ConnectorFile.can_instantiate() and ChildConnectorContainer):
 		var connector : TechTreeEditorConnector = ConnectorFile.instantiate();
-		connector.setup(TechTreeEditorConnector.ConnectorType.Child, data.index);
+		connector.setup(TechTreeEditorConnector.ConnectorType.Child, data.index, self);
+		connector.connect_with.connect(connect_with);
+		connector.disconnect_from.connect(disconnect_from);
 		
 		ChildConnectorContainer.add_child(connector);
 	
+
+func connect_with(base: TechTreeEditorConnector, other : TechTreeEditorConnector) -> void:
+	base.connected_to = other;
+	
+	if(base.Type == TechTreeEditorConnector.ConnectorType.Parent):
+		other.owner_node.data.parent_nodes.append(data);
+		data.next_nodes.append(other.owner_node.data);
+	else:
+		other.owner_node.data.next_nodes.append(data);
+		data.parent_nodes.append(other.owner_node.data);
+
+func disconnect_from(base: TechTreeEditorConnector, other : TechTreeEditorConnector) -> void:
+	base.connected_to = null;
+	
+	if(base.Type == TechTreeEditorConnector.ConnectorType.Parent):
+		other.owner_node.data.parent_nodes.erase(data);
+		data.next_nodes.erase(other.owner_node.data);
+	else:
+		other.owner_node.data.next_nodes.erase(data);
+		data.parent_nodes.erase(other.owner_node.data);
 
 
 func set_tiers(tier_count : int) -> void:

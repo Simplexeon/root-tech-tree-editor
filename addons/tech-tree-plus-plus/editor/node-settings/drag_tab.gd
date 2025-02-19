@@ -28,7 +28,6 @@ func _input(event: InputEvent) -> void:
 
 func _on_drag_tab_button_down() -> void:
 	dragging = true;
-	
 
 
 func _on_drag_tab_button_up() -> void:

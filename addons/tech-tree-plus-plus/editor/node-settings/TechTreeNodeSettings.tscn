@@ -55,10 +55,12 @@ layout_mode = 2
 
 [node name="LineEdit" type="LineEdit" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent"]
 layout_mode = 2
+size_flags_vertical = 6
 placeholder_text = "Node Title"
 context_menu_enabled = false
 virtual_keyboard_enabled = false
 drag_and_drop_selection_enabled = false
+select_all_on_focus = true
 
 [node name="ConnectionButtons" type="HBoxContainer" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent"]
 layout_mode = 2
