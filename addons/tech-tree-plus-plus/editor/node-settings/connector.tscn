@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5ehuw8thpfu0"]
+
+[ext_resource type="Texture2D" uid="uid://dveifsbqmuejw" path="res://addons/tech-tree-plus-plus/assets/connection_unfilled.png" id="1_hh23p"]
+[ext_resource type="Script" path="res://addons/tech-tree-plus-plus/editor/node-settings/connector.gd" id="2_f6s2b"]
+
+[node name="Connector" type="TextureRect"]
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture = ExtResource("1_hh23p")
+stretch_mode = 5
+script = ExtResource("2_f6s2b")

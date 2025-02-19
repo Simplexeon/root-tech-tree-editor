@@ -5,10 +5,37 @@ extends Camera2D
 # Properties
 
 @export var Sensitivity : float = 1.0;
+@export var ZoomStep : float;
 
 
+# Data
+
+var dragging : bool = false;
 
 # Processes
 
-func _on_mouse_drag(relative_pos : Vector2) -> void:
-	global_position += relative_pos * Sensitivity * -1;
+func _unhandled_input(event: InputEvent) -> void:
+	if(event is InputEventMouseButton):
+		if((event.button_index == MOUSE_BUTTON_LEFT || 
+			event.button_index == MOUSE_BUTTON_MIDDLE) and event.pressed):
+			if(!dragging):
+				dragging = true;
+				pass;
+		
+		if((event.button_index == MOUSE_BUTTON_LEFT || 
+			event.button_index == MOUSE_BUTTON_MIDDLE) and event.is_released()):
+			if(dragging):
+				dragging = false;
+		
+		if(event.button_index == MOUSE_BUTTON_WHEEL_UP):
+			zoom += Vector2(ZoomStep, ZoomStep);
+			get_tree().call_group(&"GTechTreeCamera", &"_zoom_changed", zoom);
+		
+		if(event.button_index == MOUSE_BUTTON_WHEEL_DOWN):
+			zoom -= Vector2(ZoomStep, ZoomStep);
+			get_tree().call_group(&"GTechTreeCamera", &"_zoom_changed", zoom);
+		
+	
+	if(event is InputEventMouseMotion and dragging):
+		global_position += event.relative * Sensitivity * -1;
+		DisplayServer.cursor_set_shape(DisplayServer.CursorShape.CURSOR_MOVE);

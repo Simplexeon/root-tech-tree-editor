@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://ctxj5cxwp61kp"]
+[gd_scene load_steps=6 format=3 uid="uid://ctxj5cxwp61kp"]
 
 [ext_resource type="Script" path="res://addons/tech-tree-plus-plus/editor/graph_area.gd" id="1_lcllu"]
 [ext_resource type="Theme" uid="uid://b8ncg82ykmq8w" path="res://addons/tech-tree-plus-plus/assets/tech_tree_overlay_theme.tres" id="1_ptwip"]
 [ext_resource type="PackedScene" uid="uid://bj23tbkrglk4v" path="res://addons/tech-tree-plus-plus/editor/viewport-area.tscn" id="2_qxfyu"]
-[ext_resource type="Script" path="res://addons/tech-tree-plus-plus/editor/create_node_button.gd" id="2_ywl80"]
+[ext_resource type="Script" path="res://addons/tech-tree-plus-plus/editor/toolkit.gd" id="3_x1n0j"]
+[ext_resource type="PackedScene" uid="uid://bbm235n36jt8n" path="res://addons/tech-tree-plus-plus/editor/node-settings/TechTreeNodeSettings.tscn" id="4_p06f2"]
 
 [node name="TechTreeEditor" type="Control"]
 layout_mode = 3
@@ -14,24 +15,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-
-[node name="GraphArea" type="SubViewportContainer" parent="." node_paths=PackedStringArray("TreeViewport")]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 0
-script = ExtResource("1_lcllu")
-TreeViewport = NodePath("TreeViewport")
-
-[node name="TreeViewport" type="SubViewport" parent="GraphArea"]
-handle_input_locally = false
-size = Vector2i(1080, 720)
-render_target_update_mode = 4
-
-[node name="Area" parent="GraphArea/TreeViewport" instance=ExtResource("2_qxfyu")]
+mouse_filter = 1
 
 [node name="Overlay" type="Control" parent="."]
 layout_mode = 1
@@ -42,7 +26,25 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="Overlay"]
+[node name="GraphArea" type="SubViewportContainer" parent="Overlay" node_paths=PackedStringArray("TreeViewport")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+script = ExtResource("1_lcllu")
+TreeViewport = NodePath("TreeViewport")
+
+[node name="TreeViewport" type="SubViewport" parent="Overlay/GraphArea"]
+handle_input_locally = false
+size = Vector2i(1080, 720)
+render_target_update_mode = 4
+
+[node name="Area" parent="Overlay/GraphArea/TreeViewport" instance=ExtResource("2_qxfyu")]
+
+[node name="Toolkit" type="PanelContainer" parent="Overlay" node_paths=PackedStringArray("AddNodeButton", "EditorArea")]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.209
@@ -51,12 +53,16 @@ offset_top = 10.0
 offset_right = 76.24
 offset_bottom = 161.0
 grow_horizontal = 2
+script = ExtResource("3_x1n0j")
+AddNodeButton = NodePath("Menu/CreateNodeButton")
+EditorArea = NodePath("../GraphArea/TreeViewport/Area")
+NodeEditorScene = ExtResource("4_p06f2")
 
-[node name="Menu" type="VBoxContainer" parent="Overlay/PanelContainer"]
+[node name="Menu" type="VBoxContainer" parent="Overlay/Toolkit"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Overlay/PanelContainer/Menu"]
+[node name="RichTextLabel" type="RichTextLabel" parent="Overlay/Toolkit/Menu"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 bbcode_enabled = true
@@ -64,7 +70,7 @@ text = "This is a text box"
 fit_content = true
 scroll_active = false
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="Overlay/PanelContainer/Menu"]
+[node name="RichTextLabel2" type="RichTextLabel" parent="Overlay/Toolkit/Menu"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 bbcode_enabled = true
@@ -72,7 +78,7 @@ text = "Separate box, saying hello this time with multiple lines."
 fit_content = true
 scroll_active = false
 
-[node name="RichTextLabel3" type="RichTextLabel" parent="Overlay/PanelContainer/Menu"]
+[node name="RichTextLabel3" type="RichTextLabel" parent="Overlay/Toolkit/Menu"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 bbcode_enabled = true
@@ -80,11 +86,10 @@ text = "Editing Menu:"
 fit_content = true
 scroll_active = false
 
-[node name="CreateNodeButton" type="Button" parent="Overlay/PanelContainer/Menu"]
+[node name="CreateNodeButton" type="Button" parent="Overlay/Toolkit/Menu"]
 layout_mode = 2
 theme = ExtResource("1_ptwip")
 text = "Add Node"
-script = ExtResource("2_ywl80")
 
-[connection signal="resized" from="GraphArea" to="GraphArea" method="_on_resized"]
-[connection signal="pressed" from="Overlay/PanelContainer/Menu/CreateNodeButton" to="Overlay/PanelContainer/Menu/CreateNodeButton" method="_on_pressed"]
+[connection signal="mouse_entered" from="Overlay/GraphArea" to="Overlay/GraphArea" method="_on_mouse_entered"]
+[connection signal="resized" from="Overlay/GraphArea" to="Overlay/GraphArea" method="_on_resized"]
