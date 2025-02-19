@@ -21,6 +21,10 @@ var dragging : bool = false :
 
 func _input(event: InputEvent) -> void:
 	
+	# Fix for event not processing properly sometimes
+	var event_string : String = event.as_text();
+	#print(event_string);
+	
 	if(dragging and event is InputEventMouseMotion):
 		move.emit(event.relative);
 

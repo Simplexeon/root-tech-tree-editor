@@ -15,7 +15,8 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-mouse_filter = 1
+mouse_force_pass_scroll_events = false
+theme = ExtResource("1_ptwip")
 
 [node name="Overlay" type="Control" parent="."]
 layout_mode = 1
@@ -33,6 +34,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 0
+mouse_force_pass_scroll_events = false
 stretch = true
 script = ExtResource("1_lcllu")
 TreeViewport = NodePath("TreeViewport")
@@ -53,6 +56,7 @@ offset_top = 10.0
 offset_right = 76.24
 offset_bottom = 161.0
 grow_horizontal = 2
+mouse_force_pass_scroll_events = false
 script = ExtResource("3_x1n0j")
 AddNodeButton = NodePath("Menu/CreateNodeButton")
 EditorArea = NodePath("../GraphArea/TreeViewport/Area")
@@ -62,9 +66,30 @@ NodeEditorScene = ExtResource("4_p06f2")
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 
+[node name="Files" type="HBoxContainer" parent="Overlay/Toolkit/Menu"]
+layout_mode = 2
+
+[node name="Save" type="Button" parent="Overlay/Toolkit/Menu/Files"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "Save"
+
+[node name="Spacer" type="Control" parent="Overlay/Toolkit/Menu/Files"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+
+[node name="Load" type="Button" parent="Overlay/Toolkit/Menu/Files"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "Load"
+
 [node name="CreateNodeButton" type="Button" parent="Overlay/Toolkit/Menu"]
 layout_mode = 2
-theme = ExtResource("1_ptwip")
+focus_mode = 0
+mouse_force_pass_scroll_events = false
 text = "Add Node"
 
 [connection signal="mouse_entered" from="Overlay/GraphArea" to="Overlay/GraphArea" method="_on_mouse_entered"]

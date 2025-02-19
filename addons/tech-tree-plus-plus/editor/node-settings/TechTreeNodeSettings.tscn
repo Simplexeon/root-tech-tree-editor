@@ -26,6 +26,7 @@ layout_mode = 2
 
 [node name="DragTab" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+focus_mode = 0
 mouse_default_cursor_shape = 2
 action_mode = 0
 keep_pressed_outside = true

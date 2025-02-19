@@ -51,6 +51,9 @@ var camera_pos : Vector2 :
 		var world_pos 
 		return camera.get_screen_center_position();
 
+var just_connected : bool = false;
+
+
 
 # Components
 
@@ -67,15 +70,21 @@ func setup(_type : ConnectorType, _parent_id : int, _owner_node : TechTreeNodeEd
 
 func _input(event: InputEvent) -> void:
 	
+	if(mouse_over):
+		if(event is InputEventMouseButton):
+			if(event.button_index == MOUSE_BUTTON_LEFT and !just_connected):
+				if(event.is_pressed()):
+					dragging = true;
+	
+	
 	if(dragging):
 		if(event is InputEventMouse):
-			print(event.global_position);
 			Line.set_point_position(1, (get_canvas_transform().affine_inverse() * 
 				event.global_position) - global_position);
 		
 		if(event is InputEventMouseButton):
 			if(event.button_index == MOUSE_BUTTON_LEFT):
-				if(event.is_pressed()):
+				if(event.is_pressed() and !mouse_over):
 					
 					Line.set_point_position(1, Vector2.ZERO);
 					modify_connection();
@@ -87,11 +96,6 @@ func _input(event: InputEvent) -> void:
 					dragging = false;
 	
 	
-	if(mouse_over):
-		if(event is InputEventMouseButton):
-			if(event.button_index == MOUSE_BUTTON_LEFT and !hovered_connector):
-				if(event.is_pressed()):
-					dragging = true;
 
 
 func _on_mouse_entered() -> void:
@@ -105,15 +109,30 @@ func _on_mouse_exited() -> void:
 
 
 func _entered_connector(other : TechTreeEditorConnector) -> void:
+	if(!owner_node):
+		return;
+	
 	if(other != self):
 		hovered_connector = other;
 
 func _exited_connector(other : TechTreeEditorConnector) -> void:
-	hovered_connector = null;
+	just_connected = false;
+	
+	if(!owner_node):
+		return;
+	
+	if(other != self):
+		hovered_connector = null;
+	
 
 
 
 # Functions
+
+func update_line() -> void:
+	if(connected_to):
+		Line.set_point_position(1, connected_to.global_position - global_position);
+		
 
 func modify_connection() -> void:
 	
@@ -123,3 +142,7 @@ func modify_connection() -> void:
 				disconnect_from.emit(self, connected_to);
 			
 			connect_with.emit(self, hovered_connector);
+			just_connected = true;
+	else:
+		disconnect_from.emit(self, connected_to);
+		

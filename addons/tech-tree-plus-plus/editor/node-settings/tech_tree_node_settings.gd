@@ -71,6 +71,15 @@ func setup(index : int) -> void:
 func _on_drag_tab_move(relative : Vector2) -> void:
 	global_position += relative * (1.0 / zoom.x);
 	
+	for connector : TechTreeEditorConnector in ParentConnectorContainer.get_children():
+		connector.update_line();
+		if(connector.connected_to):
+			connector.connected_to.update_line();
+	
+	for connector : TechTreeEditorConnector in ChildConnectorContainer.get_children():
+		connector.update_line();
+		if(connector.connected_to):
+			connector.connected_to.update_line();
 
 
 # Functions
@@ -100,6 +109,7 @@ func add_child_connector() -> void:
 
 func connect_with(base: TechTreeEditorConnector, other : TechTreeEditorConnector) -> void:
 	base.connected_to = other;
+	other.connected_to = base;
 	
 	if(base.Type == TechTreeEditorConnector.ConnectorType.Parent):
 		other.owner_node.data.parent_nodes.append(data);
@@ -110,6 +120,7 @@ func connect_with(base: TechTreeEditorConnector, other : TechTreeEditorConnector
 
 func disconnect_from(base: TechTreeEditorConnector, other : TechTreeEditorConnector) -> void:
 	base.connected_to = null;
+	other.connected_to = null;
 	
 	if(base.Type == TechTreeEditorConnector.ConnectorType.Parent):
 		other.owner_node.data.parent_nodes.erase(data);
