@@ -29,11 +29,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 		if(event.button_index == MOUSE_BUTTON_WHEEL_UP):
 			zoom += Vector2(ZoomStep, ZoomStep);
-			get_tree().call_group(&"GTechTreeCamera", &"_zoom_changed", zoom);
 		
 		if(event.button_index == MOUSE_BUTTON_WHEEL_DOWN):
 			zoom -= Vector2(ZoomStep, ZoomStep);
-			get_tree().call_group(&"GTechTreeCamera", &"_zoom_changed", zoom);
 		
 	
 	if(event is InputEventMouseMotion and dragging):

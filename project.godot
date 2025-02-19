@@ -30,7 +30,7 @@ enabled=PackedStringArray("res://addons/tech-tree-plus-plus/plugin.cfg")
 
 [global_group]
 
-GTechTreeCamera=""
+GTechTreeConnector=""
 
 [input]
 

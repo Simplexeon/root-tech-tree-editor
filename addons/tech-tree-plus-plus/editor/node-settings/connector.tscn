@@ -3,9 +3,20 @@
 [ext_resource type="Texture2D" uid="uid://dveifsbqmuejw" path="res://addons/tech-tree-plus-plus/assets/connection_unfilled.png" id="1_hh23p"]
 [ext_resource type="Script" path="res://addons/tech-tree-plus-plus/editor/node-settings/connector.gd" id="2_f6s2b"]
 
-[node name="Connector" type="TextureRect"]
+[node name="Connector" type="TextureRect" groups=["GTechTreeConnector"]]
+offset_right = 32.0
+offset_bottom = 32.0
 size_flags_horizontal = 4
 size_flags_vertical = 6
+mouse_filter = 0
+mouse_default_cursor_shape = 2
 texture = ExtResource("1_hh23p")
 stretch_mode = 5
 script = ExtResource("2_f6s2b")
+
+[node name="ConnectionLine" type="Line2D" parent="."]
+position = Vector2(16, 16)
+points = PackedVector2Array(0, 0, 0, 0)
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

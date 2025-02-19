@@ -23,7 +23,10 @@ class_name TechTreeNodeEditor
 
 var data : TechTreeNode;
 
-var zoom : Vector2 = Vector2.ONE;
+var zoom : Vector2 :
+	get: 
+		var camera : Camera2D = get_viewport().get_camera_2d();
+		return camera.zoom;
 
 
 # Processes
@@ -58,14 +61,14 @@ func _ready() -> void:
 
 func setup(index : int) -> void:
 	data.set_id(index);
+	
+	if(ParentConnectorContainer):
+		for connector in ParentConnectorContainer.get_children():
+			connector.parent_id = index;
 
 func _on_drag_tab_move(relative:Vector2) -> void:
 	position += relative * (1.0 / zoom.x);
 	
-
-func _zoom_changed(_zoom : Vector2) -> void:
-	zoom = _zoom;
-
 
 # Functions
 
@@ -73,7 +76,7 @@ func add_parent_connector() -> void:
 	
 	if(ConnectorFile.can_instantiate() and ParentConnectorContainer):
 		var connector : TechTreeEditorConnector = ConnectorFile.instantiate();
-		connector.setup(TechTreeEditorConnector.ConnectorType.Parent);
+		connector.setup(TechTreeEditorConnector.ConnectorType.Parent, data.index);
 		
 		ParentConnectorContainer.add_child(connector);
 	
@@ -83,7 +86,7 @@ func add_child_connector() -> void:
 	
 	if(ConnectorFile.can_instantiate() and ChildConnectorContainer):
 		var connector : TechTreeEditorConnector = ConnectorFile.instantiate();
-		connector.setup(TechTreeEditorConnector.ConnectorType.Child);
+		connector.setup(TechTreeEditorConnector.ConnectorType.Child, data.index);
 		
 		ChildConnectorContainer.add_child(connector);
 	
