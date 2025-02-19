@@ -110,6 +110,13 @@ func add_parent_connector() -> void:
 		
 		ParentConnectorContainer.add_child(connector);
 	
+	if(ParentConnectorContainer):
+		
+		for connector in ParentConnectorContainer.get_children():
+			connector.call_deferred(&"update_line");
+			if(connector.connected_to):
+				connector.connected_to.call_deferred(&"update_line");
+	
 
 
 func add_child_connector() -> void:
@@ -121,6 +128,13 @@ func add_child_connector() -> void:
 		connector.disconnect_from.connect(disconnect_from);
 		
 		ChildConnectorContainer.add_child(connector);
+	
+	if(ChildConnectorContainer):
+		
+		for connector in ChildConnectorContainer.get_children():
+			connector.call_deferred(&"update_line");
+			if(connector.connected_to):
+				connector.connected_to.call_deferred(&"update_line");
 	
 
 func connect_with(base: TechTreeEditorConnector, other : TechTreeEditorConnector) -> void:
