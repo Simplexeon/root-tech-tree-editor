@@ -38,7 +38,7 @@ var unlocked_tiers : int;
 
 # The unlock requirements for each tier of the tech tree
 # Dictionary for each tier to allow for multiple resources
-var unlock_requirements : Array[Dictionary];
+var unlock_requirements : Array[int];
 
 # When this node becomes available to be unlocked
 var availability : AvailabilityRequirement;
@@ -62,9 +62,7 @@ func _init() -> void:
 	tiers = 1;
 	unlocked_tiers = 0;
 	
-	unlock_requirements = [{
-		"points": 1
-	}];
+	unlock_requirements = [0];
 	
 	availability = AvailabilityRequirement.OneParent;
 

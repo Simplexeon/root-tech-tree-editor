@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bbm235n36jt8n"]
+[gd_scene load_steps=9 format=3 uid="uid://bbm235n36jt8n"]
 
 [ext_resource type="Script" path="res://addons/tech-tree-plus-plus/editor/node-settings/tech_tree_node_settings.gd" id="1_4yt8d"]
 [ext_resource type="Theme" uid="uid://b8ncg82ykmq8w" path="res://addons/tech-tree-plus-plus/assets/tech_tree_overlay_theme.tres" id="1_i6wqs"]
 [ext_resource type="PackedScene" uid="uid://c5ehuw8thpfu0" path="res://addons/tech-tree-plus-plus/editor/node-settings/connector.tscn" id="3_u8q46"]
 [ext_resource type="Script" path="res://addons/tech-tree-plus-plus/editor/node-settings/drag_tab.gd" id="4_8yxap"]
+[ext_resource type="PackedScene" uid="uid://ds0iuciuso486" path="res://addons/tech-tree-plus-plus/editor/node-settings/tier_cost.tscn" id="4_gtara"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fbuhr"]
 bg_color = Color(0, 0, 0, 1)
@@ -20,7 +21,7 @@ bg_color = Color(0.956528, 0.387862, 0.375172, 1)
 corner_radius_top_right = 8
 corner_radius_bottom_left = 8
 
-[node name="TechTreeNodeSettings" type="PanelContainer" node_paths=PackedStringArray("DragTab", "DeleteButton", "ParentConnectorContainer", "ChildConnectorContainer", "AddParentButton", "AddChildButton", "TierCountBox", "UnlockDropdown", "ProgressRequirementBox") groups=["GTechTreeCamera"]]
+[node name="TechTreeNodeSettings" type="PanelContainer" node_paths=PackedStringArray("DragTab", "DeleteButton", "ParentConnectorContainer", "ChildConnectorContainer", "AddParentButton", "AddChildButton", "UnlockDropdown", "ProgressRequirementContainer", "ProgressRequirementBox", "TierCountBox", "TierCostContainer") groups=["GTechTreeCamera"]]
 custom_minimum_size = Vector2(100, 100)
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -32,10 +33,13 @@ ParentConnectorContainer = NodePath("VBoxContainer/MarginContainer/HBoxContainer
 ChildConnectorContainer = NodePath("VBoxContainer/MarginContainer/HBoxContainer/ChildSlots")
 AddParentButton = NodePath("VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent/ConnectionButtons/AddParentButton")
 AddChildButton = NodePath("VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent/ConnectionButtons/AddChildButton")
-TierCountBox = NodePath("VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent/Tiers/SpinBox")
 UnlockDropdown = NodePath("VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent/UnlockRequirement/UnlockDropdown")
+ProgressRequirementContainer = NodePath("VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent/ProgressRequirement")
 ProgressRequirementBox = NodePath("VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent/ProgressRequirement/SpinBox")
+TierCountBox = NodePath("VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent/Tiers/SpinBox")
+TierCostContainer = NodePath("VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent/TierCosts")
 ConnectorFile = ExtResource("3_u8q46")
+TierCostControlFile = ExtResource("4_gtara")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -105,24 +109,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Add Child"
 
-[node name="Tiers" type="HBoxContainer" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent"]
-layout_mode = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent/Tiers"]
-layout_mode = 2
-size_flags_horizontal = 2
-size_flags_vertical = 4
-size_flags_stretch_ratio = 2.0
-text = "Tiers:"
-fit_content = true
-scroll_active = false
-autowrap_mode = 0
-
-[node name="SpinBox" type="SpinBox" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent/Tiers"]
-layout_mode = 2
-size_flags_horizontal = 10
-alignment = 1
-
 [node name="UnlockRequirement" type="HBoxContainer" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent"]
 layout_mode = 2
 
@@ -152,6 +138,7 @@ popup/item_2/text = "Tree Progress"
 popup/item_2/id = 2
 
 [node name="ProgressRequirement" type="HBoxContainer" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent"]
+visible = false
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent/ProgressRequirement"]
@@ -167,12 +154,36 @@ autowrap_mode = 0
 [node name="SpinBox" type="SpinBox" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent/ProgressRequirement"]
 layout_mode = 2
 size_flags_horizontal = 10
+mouse_force_pass_scroll_events = false
 alignment = 1
+
+[node name="Tiers" type="HBoxContainer" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent/Tiers"]
+layout_mode = 2
+size_flags_horizontal = 2
+size_flags_vertical = 4
+size_flags_stretch_ratio = 2.0
+text = "Tiers:"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="SpinBox" type="SpinBox" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent/Tiers"]
+layout_mode = 2
+size_flags_horizontal = 10
+mouse_force_pass_scroll_events = false
+alignment = 1
+
+[node name="TierCosts" type="VBoxContainer" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent"]
+layout_mode = 2
 
 [node name="ChildSlots" type="VBoxContainer" parent="VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 alignment = 1
 
+[connection signal="minimum_size_changed" from="." to="." method="update_connectors"]
 [connection signal="button_down" from="VBoxContainer/HBoxContainer/DragTab" to="VBoxContainer/HBoxContainer/DragTab" method="_on_drag_tab_button_down"]
 [connection signal="button_up" from="VBoxContainer/HBoxContainer/DragTab" to="VBoxContainer/HBoxContainer/DragTab" method="_on_drag_tab_button_up"]
 [connection signal="move" from="VBoxContainer/HBoxContainer/DragTab" to="." method="_on_drag_tab_move"]
