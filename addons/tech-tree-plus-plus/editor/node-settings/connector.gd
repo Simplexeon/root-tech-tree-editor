@@ -158,5 +158,6 @@ func modify_connection() -> void:
 			connect_with.emit(self, hovered_connector);
 			just_connected = true;
 	else:
-		disconnect_from.emit(self, connected_to);
+		if(connected_to):
+			disconnect_from.emit(self, connected_to);
 		

@@ -6,6 +6,7 @@ class_name TechTreeNodeEditor
 
 @export_subgroup("Elements")
 @export var DragTab : Button;
+@export var DeleteButton : Button;
 @export var ParentConnectorContainer : Control;
 @export var ChildConnectorContainer : Control;
 @export var AddParentButton : Button;
@@ -57,6 +58,8 @@ func _ready() -> void:
 		ProgressRequirementBox.value_changed.connect(func (value : float): 
 			set_progress_requirement(int(value)));
 	
+	if(DeleteButton):
+		DeleteButton.pressed.connect(delete);
 	pass;
 
 func setup(index : int) -> void:
@@ -83,6 +86,19 @@ func _on_drag_tab_move(relative : Vector2) -> void:
 
 
 # Functions
+
+func delete() -> void:
+	if(ParentConnectorContainer):
+		for connector in ParentConnectorContainer.get_children():
+			if(connector.connected_to):
+				disconnect_from(connector, connector.connected_to);
+	
+	if(ChildConnectorContainer):
+		for connector in ChildConnectorContainer.get_children():
+			if(connector.connected_to):
+				disconnect_from(connector, connector.connected_to);
+	
+	queue_free();
 
 func add_parent_connector() -> void:
 	
@@ -142,4 +158,3 @@ func set_unlock_requirement(unlock_requirement : TechTreeNode.AvailabilityRequir
 
 func set_progress_requirement(amount : int) -> void:
 	data.availability_min = amount;
-

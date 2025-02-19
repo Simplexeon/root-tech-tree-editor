@@ -1,17 +1,33 @@
-[gd_scene load_steps=5 format=3 uid="uid://bbm235n36jt8n"]
+[gd_scene load_steps=8 format=3 uid="uid://bbm235n36jt8n"]
 
 [ext_resource type="Script" path="res://addons/tech-tree-plus-plus/editor/node-settings/tech_tree_node_settings.gd" id="1_4yt8d"]
 [ext_resource type="Theme" uid="uid://b8ncg82ykmq8w" path="res://addons/tech-tree-plus-plus/assets/tech_tree_overlay_theme.tres" id="1_i6wqs"]
 [ext_resource type="PackedScene" uid="uid://c5ehuw8thpfu0" path="res://addons/tech-tree-plus-plus/editor/node-settings/connector.tscn" id="3_u8q46"]
 [ext_resource type="Script" path="res://addons/tech-tree-plus-plus/editor/node-settings/drag_tab.gd" id="4_8yxap"]
 
-[node name="TechTreeNodeSettings" type="PanelContainer" node_paths=PackedStringArray("DragTab", "ParentConnectorContainer", "ChildConnectorContainer", "AddParentButton", "AddChildButton", "TierCountBox", "UnlockDropdown", "ProgressRequirementBox") groups=["GTechTreeCamera"]]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fbuhr"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 8
+corner_radius_bottom_right = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7hdsr"]
+bg_color = Color(0.644833, 0.137596, 0.159329, 1)
+corner_radius_top_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s0kql"]
+bg_color = Color(0.956528, 0.387862, 0.375172, 1)
+corner_radius_top_right = 8
+corner_radius_bottom_left = 8
+
+[node name="TechTreeNodeSettings" type="PanelContainer" node_paths=PackedStringArray("DragTab", "DeleteButton", "ParentConnectorContainer", "ChildConnectorContainer", "AddParentButton", "AddChildButton", "TierCountBox", "UnlockDropdown", "ProgressRequirementBox") groups=["GTechTreeCamera"]]
 custom_minimum_size = Vector2(100, 100)
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("1_i6wqs")
 script = ExtResource("1_4yt8d")
-DragTab = NodePath("VBoxContainer/DragTab")
+DragTab = NodePath("VBoxContainer/HBoxContainer/DragTab")
+DeleteButton = NodePath("VBoxContainer/HBoxContainer/DeleteButton")
 ParentConnectorContainer = NodePath("VBoxContainer/MarginContainer/HBoxContainer/ParentSlots")
 ChildConnectorContainer = NodePath("VBoxContainer/MarginContainer/HBoxContainer/ChildSlots")
 AddParentButton = NodePath("VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent/ConnectionButtons/AddParentButton")
@@ -24,14 +40,27 @@ ConnectorFile = ExtResource("3_u8q46")
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="DragTab" type="Button" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="DragTab" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 focus_mode = 0
 mouse_default_cursor_shape = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_fbuhr")
 action_mode = 0
 keep_pressed_outside = true
 text = "::::"
 script = ExtResource("4_8yxap")
+
+[node name="DeleteButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/hover = SubResource("StyleBoxFlat_7hdsr")
+theme_override_styles/normal = SubResource("StyleBoxFlat_s0kql")
+text = " x "
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -144,6 +173,6 @@ alignment = 1
 layout_mode = 2
 alignment = 1
 
-[connection signal="button_down" from="VBoxContainer/DragTab" to="VBoxContainer/DragTab" method="_on_drag_tab_button_down"]
-[connection signal="button_up" from="VBoxContainer/DragTab" to="VBoxContainer/DragTab" method="_on_drag_tab_button_up"]
-[connection signal="move" from="VBoxContainer/DragTab" to="." method="_on_drag_tab_move"]
+[connection signal="button_down" from="VBoxContainer/HBoxContainer/DragTab" to="VBoxContainer/HBoxContainer/DragTab" method="_on_drag_tab_button_down"]
+[connection signal="button_up" from="VBoxContainer/HBoxContainer/DragTab" to="VBoxContainer/HBoxContainer/DragTab" method="_on_drag_tab_button_up"]
+[connection signal="move" from="VBoxContainer/HBoxContainer/DragTab" to="." method="_on_drag_tab_move"]

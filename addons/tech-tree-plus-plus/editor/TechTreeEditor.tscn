@@ -58,35 +58,38 @@ offset_bottom = 161.0
 grow_horizontal = 2
 mouse_force_pass_scroll_events = false
 script = ExtResource("3_x1n0j")
-AddNodeButton = NodePath("Menu/CreateNodeButton")
+AddNodeButton = NodePath("MarginContainer/Menu/CreateNodeButton")
 EditorArea = NodePath("../GraphArea/TreeViewport/Area")
 NodeEditorScene = ExtResource("4_p06f2")
 
-[node name="Menu" type="VBoxContainer" parent="Overlay/Toolkit"]
+[node name="MarginContainer" type="MarginContainer" parent="Overlay/Toolkit"]
+layout_mode = 2
+
+[node name="Menu" type="VBoxContainer" parent="Overlay/Toolkit/MarginContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 
-[node name="Files" type="HBoxContainer" parent="Overlay/Toolkit/Menu"]
+[node name="Files" type="HBoxContainer" parent="Overlay/Toolkit/MarginContainer/Menu"]
 layout_mode = 2
 
-[node name="Save" type="Button" parent="Overlay/Toolkit/Menu/Files"]
+[node name="Save" type="Button" parent="Overlay/Toolkit/MarginContainer/Menu/Files"]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 text = "Save"
 
-[node name="Spacer" type="Control" parent="Overlay/Toolkit/Menu/Files"]
+[node name="Spacer" type="Control" parent="Overlay/Toolkit/MarginContainer/Menu/Files"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.2
 
-[node name="Load" type="Button" parent="Overlay/Toolkit/Menu/Files"]
+[node name="Load" type="Button" parent="Overlay/Toolkit/MarginContainer/Menu/Files"]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 text = "Load"
 
-[node name="CreateNodeButton" type="Button" parent="Overlay/Toolkit/Menu"]
+[node name="CreateNodeButton" type="Button" parent="Overlay/Toolkit/MarginContainer/Menu"]
 layout_mode = 2
 focus_mode = 0
 mouse_force_pass_scroll_events = false
