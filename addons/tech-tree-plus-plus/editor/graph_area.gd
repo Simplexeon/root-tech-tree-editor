@@ -6,6 +6,10 @@ extends SubViewportContainer
 @export var TreeViewport : SubViewport;
 
 
+# Data
+
+var mouse_over : bool = false;
+
 
 # Processes
 
@@ -13,6 +17,9 @@ func is_editor_hint() -> bool:
 	return false;
 
 func _input(event: InputEvent) -> void:
+	
+	if(!mouse_over or !visible):
+		return;
 	
 	# Fix for event not processing properly sometimes
 	var event_string : String = event.as_text();
@@ -33,6 +40,9 @@ func _input(event: InputEvent) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	
+	if(!mouse_over or !visible):
+		return;
+	
 	# Fix for event not processing properly sometimes
 	var event_string : String = event.as_text();
 	#print(event_string);
@@ -48,3 +58,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	if(TreeViewport):
 		TreeViewport.push_input(event);
+
+
+func _on_mouse_entered() -> void:
+	mouse_over = true;
+
+
+func _on_mouse_exited() -> void:
+	mouse_over = false;

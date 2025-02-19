@@ -93,4 +93,5 @@ mouse_force_pass_scroll_events = false
 text = "Add Node"
 
 [connection signal="mouse_entered" from="Overlay/GraphArea" to="Overlay/GraphArea" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Overlay/GraphArea" to="Overlay/GraphArea" method="_on_mouse_exited"]
 [connection signal="resized" from="Overlay/GraphArea" to="Overlay/GraphArea" method="_on_resized"]

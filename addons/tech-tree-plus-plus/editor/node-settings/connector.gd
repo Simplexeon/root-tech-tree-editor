@@ -11,6 +11,7 @@ signal disconnect_from(connector : TechTreeEditorConnector, other : TechTreeEdit
 # Properties
 
 @export var Type : ConnectorType;
+@export var BaseColor : Color = Color.WHITE;
 
 
 enum ConnectorType {
@@ -33,8 +34,17 @@ var connected_to : TechTreeEditorConnector :
 		
 		if(connected_to):
 			Line.set_point_position(1, connected_to.global_position - global_position);
+
+			if(connected_to.modulate != BaseColor):
+				modulate = connected_to.modulate;
+			else:
+				var color : Color = Color.from_ok_hsl(randf_range(0.0, 1.0), 0.7, 0.8);
+				modulate = color;
+
+
 		else:
 			Line.set_point_position(1, Vector2.ZERO);
+			modulate = BaseColor;
 
 var hovered_connector : TechTreeEditorConnector;
 
@@ -140,6 +150,10 @@ func modify_connection() -> void:
 		if(hovered_connector.Type != Type and hovered_connector.parent_id != parent_id):
 			if(connected_to and connected_to != hovered_connector):
 				disconnect_from.emit(self, connected_to);
+			
+			if(hovered_connector.connected_to):
+				hovered_connector.disconnect_from.emit(hovered_connector, 
+					hovered_connector.connected_to);
 			
 			connect_with.emit(self, hovered_connector);
 			just_connected = true;
