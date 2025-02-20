@@ -76,6 +76,7 @@ layout_mode = 2
 
 [node name="ParentSlots" type="VBoxContainer" parent="VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 alignment = 1
 
 [node name="Connector" parent="VBoxContainer/MarginContainer/HBoxContainer/ParentSlots" instance=ExtResource("3_u8q46")]
@@ -89,7 +90,7 @@ layout_mode = 2
 
 [node name="LineEdit" type="LineEdit" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent"]
 layout_mode = 2
-size_flags_vertical = 6
+size_flags_vertical = 4
 placeholder_text = "Node Title"
 context_menu_enabled = false
 virtual_keyboard_enabled = false
@@ -181,6 +182,7 @@ layout_mode = 2
 
 [node name="ChildSlots" type="VBoxContainer" parent="VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 alignment = 1
 
 [connection signal="minimum_size_changed" from="." to="." method="update_connectors"]
