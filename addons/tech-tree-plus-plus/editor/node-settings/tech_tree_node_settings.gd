@@ -49,7 +49,8 @@ func _ready() -> void:
 	
 	# Setup data
 	
-	data = TechTreeNode.new();
+	if(!data):
+		data = TechTreeNode.new();
 	
 	
 	# Setup UI
@@ -105,6 +106,61 @@ func _on_drag_tab_move(relative : Vector2) -> void:
 
 # Functions
 
+func load_from_data(stored_data : Dictionary) -> void:
+	
+	#{
+		#"name": name,
+		#"index": index,
+		#"parents": parent_nodes,
+		#"children": next_nodes,
+		#"availability": AvailabilityRequirement.keys()[availability],
+		#"progress_min": availability_min,
+		#"tiers": tiers,
+		#"tier_values": tier_values,
+		#
+		#"editor_pos": editor_pos,
+	#};
+	
+	data.name = stored_data["name"];
+	data.index = stored_data["index"];
+	data.parent_nodes = stored_data["parents"];
+	data.next_nodes = stored_data["children"];
+	data.availability = TechTreeNode.AvailabilityRequirement[stored_data["availability"]];
+	data.availability_min = stored_data["progress_min"];
+	data.tiers = stored_data["tiers"];
+	data.tier_values = stored_data["tier_values"];
+	data.editor_pos = stored_data["editor_pos"];
+	
+	
+	if(IDLabel):
+		IDLabel.text = "ID: " + str(data.index);
+	
+	if(TitleField):
+		TitleField.text = data.name;
+	
+	# CONNECTORS
+	
+	if(UnlockDropdown):
+		UnlockDropdown.selected = data.availability;
+	
+	if(ProgressRequirementBox):
+		ProgressRequirementBox.value = data.availability_min;
+	
+	if(TierCountBox):
+		TierCountBox.value = data.tiers;
+	
+	# FILL TIER DATA
+	if(TierCostContainer):
+		var i : int = 0;
+		for cost in TierCostContainer.get_children():
+			if(cost.Counter):
+				cost.Counter.value = data.tier_values[i];
+			
+			i += 1;
+	
+	global_position = data.editor_pos;
+
+
 func delete() -> void:
 	if(ParentConnectorContainer):
 		for connector in ParentConnectorContainer.get_children():
@@ -124,10 +180,11 @@ func change_name(new_name : String) -> void:
 	data_changed.emit(data);
 
 
-func add_parent_connector() -> void:
+func add_parent_connector() -> TechTreeEditorConnector:
 	
+	var connector : TechTreeEditorConnector;
 	if(ConnectorFile.can_instantiate() and ParentConnectorContainer):
-		var connector : TechTreeEditorConnector = ConnectorFile.instantiate();
+		connector = ConnectorFile.instantiate();
 		connector.setup(TechTreeEditorConnector.ConnectorType.Parent, data.index, self);
 		connector.connect_with.connect(connect_with);
 		connector.disconnect_from.connect(disconnect_from);
@@ -135,12 +192,14 @@ func add_parent_connector() -> void:
 		ParentConnectorContainer.add_child(connector);
 	
 	call_deferred(&"update_connectors");
+	return connector;
 
 
-func add_child_connector() -> void:
+func add_child_connector() -> TechTreeEditorConnector:
 	
+	var connector : TechTreeEditorConnector;
 	if(ConnectorFile.can_instantiate() and ChildConnectorContainer):
-		var connector : TechTreeEditorConnector = ConnectorFile.instantiate();
+		connector = ConnectorFile.instantiate();
 		connector.setup(TechTreeEditorConnector.ConnectorType.Child, data.index, self);
 		connector.connect_with.connect(connect_with);
 		connector.disconnect_from.connect(disconnect_from);
@@ -148,8 +207,57 @@ func add_child_connector() -> void:
 		ChildConnectorContainer.add_child(connector);
 	
 	call_deferred(&"update_connectors");
-		
 	
+	return connector;
+	
+
+func connect_to(other_node : TechTreeNodeEditor, type : TechTreeEditorConnector.ConnectorType) -> void:
+	var container : Control;
+	match(type):
+		TechTreeEditorConnector.ConnectorType.Parent:
+			container = ParentConnectorContainer;
+		TechTreeEditorConnector.ConnectorType.Child:
+			container = ChildConnectorContainer;
+	
+	var connector : TechTreeEditorConnector;
+	if(container):
+		for item in container.get_children():
+			if(!item.connected_to):
+				connector = item;
+				break;
+		
+		# If no connectors, create one
+		match(type):
+			TechTreeEditorConnector.ConnectorType.Parent:
+				connector = add_parent_connector();
+			TechTreeEditorConnector.ConnectorType.Child:
+				connector = add_child_connector();
+	
+	var other_container : Control;
+	match(type):
+		TechTreeEditorConnector.ConnectorType.Parent:
+			other_container = other_node.ChildConnectorContainer;
+		TechTreeEditorConnector.ConnectorType.Child:
+			other_container = other_node.ParentConnectorContainer;
+	
+	var other_connector : TechTreeEditorConnector;
+	if(other_container):
+		
+		for item in other_container.get_children():
+			if(!item.connected_to):
+				other_connector = item;
+				break;
+		
+		# If no connectors, create one
+		match(type):
+			TechTreeEditorConnector.ConnectorType.Parent:
+				other_connector = other_node.add_child_connector();
+			TechTreeEditorConnector.ConnectorType.Child:
+				other_connector = other_node.add_parent_connector();
+	
+	if(connector and other_connector):
+		connect_with(connector, other_connector);
+
 
 func connect_with(base: TechTreeEditorConnector, other : TechTreeEditorConnector) -> void:
 	base.connected_to = other;
@@ -253,4 +361,3 @@ func set_unlock_requirement(unlock_requirement : TechTreeNode.AvailabilityRequir
 func set_progress_requirement(amount : int) -> void:
 	data.availability_min = amount;
 	data_changed.emit(data);
-
