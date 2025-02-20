@@ -1,0 +1,88 @@
+[gd_resource type="Resource" script_class="TechTreeData" load_steps=2 format=3 uid="uid://88483tbojide"]
+
+[ext_resource type="Script" path="res://addons/tech-tree-plus-plus/TechTreeData.gd" id="1_vkv3y"]
+
+[resource]
+script = ExtResource("1_vkv3y")
+data = {
+"node_data": {
+1: {
+"availability": "OneParent",
+"children": Array[int]([2]),
+"editor_pos": Vector2(-612.111, -153.722),
+"index": 1,
+"name": "Cool Node",
+"parents": Array[int]([]),
+"progress_min": 0,
+"tier_values": Array[int]([0, 0]),
+"tiers": 1
+},
+2: {
+"availability": "OneParent",
+"children": Array[int]([4, 5, 6]),
+"editor_pos": Vector2(75.7301, -144.651),
+"index": 2,
+"name": "ahh",
+"parents": Array[int]([1, 3]),
+"progress_min": 0,
+"tier_values": Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+"tiers": 35
+},
+3: {
+"availability": "OneParent",
+"children": Array[int]([2]),
+"editor_pos": Vector2(-589.881, 157.341),
+"index": 3,
+"name": "Magic",
+"parents": Array[int]([]),
+"progress_min": 0,
+"tier_values": Array[int]([]),
+"tiers": 0
+},
+4: {
+"availability": "TreeProgress",
+"children": Array[int]([7]),
+"editor_pos": Vector2(633.159, 16.4931),
+"index": 4,
+"name": "FINAL EXPLOSION",
+"parents": Array[int]([2]),
+"progress_min": 2,
+"tier_values": Array[int]([0, 0]),
+"tiers": 1
+},
+5: {
+"availability": "OneParent",
+"children": Array[int]([7]),
+"editor_pos": Vector2(749.999, 385.714),
+"index": 5,
+"name": "Node Name",
+"parents": Array[int]([2]),
+"progress_min": 0,
+"tier_values": Array[int]([]),
+"tiers": 0
+},
+6: {
+"availability": "OneParent",
+"children": Array[int]([]),
+"editor_pos": Vector2(803.571, 678.57),
+"index": 6,
+"name": "Node Name",
+"parents": Array[int]([2]),
+"progress_min": 0,
+"tier_values": Array[int]([]),
+"tiers": 0
+},
+7: {
+"availability": "OneParent",
+"children": Array[int]([]),
+"editor_pos": Vector2(1278.57, 99.9999),
+"index": 7,
+"name": "Node Name",
+"parents": Array[int]([5, 4]),
+"progress_min": 0,
+"tier_values": Array[int]([]),
+"tiers": 0
+}
+},
+"root_nodes": Array[int]([1, 3])
+}

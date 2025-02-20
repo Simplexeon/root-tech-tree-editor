@@ -211,7 +211,25 @@ func add_child_connector() -> TechTreeEditorConnector:
 	return connector;
 	
 
-func connect_to(other_node : TechTreeNodeEditor, type : TechTreeEditorConnector.ConnectorType) -> void:
+func is_connected_to(other_node_id : int, type : TechTreeEditorConnector.ConnectorType) -> bool:
+	var container : Control;
+	match(type):
+		TechTreeEditorConnector.ConnectorType.Parent:
+			container = ParentConnectorContainer;
+		TechTreeEditorConnector.ConnectorType.Child:
+			container = ChildConnectorContainer;
+	
+	var connector : TechTreeEditorConnector;
+	if(container):
+		for item in container.get_children():
+			if(item.connected_to):
+				if(item.connected_to.parent_id == other_node_id):
+					return true;
+	
+	return false;
+	
+
+func get_open_connector(type : TechTreeEditorConnector.ConnectorType) -> TechTreeEditorConnector:
 	var container : Control;
 	match(type):
 		TechTreeEditorConnector.ConnectorType.Parent:
@@ -227,33 +245,22 @@ func connect_to(other_node : TechTreeNodeEditor, type : TechTreeEditorConnector.
 				break;
 		
 		# If no connectors, create one
-		match(type):
-			TechTreeEditorConnector.ConnectorType.Parent:
-				connector = add_parent_connector();
-			TechTreeEditorConnector.ConnectorType.Child:
-				connector = add_child_connector();
+		if(!connector):
+			match(type):
+				TechTreeEditorConnector.ConnectorType.Parent:
+					connector = add_parent_connector();
+				TechTreeEditorConnector.ConnectorType.Child:
+					connector = add_child_connector();
 	
-	var other_container : Control;
-	match(type):
-		TechTreeEditorConnector.ConnectorType.Parent:
-			other_container = other_node.ChildConnectorContainer;
-		TechTreeEditorConnector.ConnectorType.Child:
-			other_container = other_node.ParentConnectorContainer;
+	return connector;
+
+func connect_to(other_node : TechTreeNodeEditor, type : TechTreeEditorConnector.ConnectorType) -> void:
 	
-	var other_connector : TechTreeEditorConnector;
-	if(other_container):
-		
-		for item in other_container.get_children():
-			if(!item.connected_to):
-				other_connector = item;
-				break;
-		
-		# If no connectors, create one
-		match(type):
-			TechTreeEditorConnector.ConnectorType.Parent:
-				other_connector = other_node.add_child_connector();
-			TechTreeEditorConnector.ConnectorType.Child:
-				other_connector = other_node.add_parent_connector();
+	var connector : TechTreeEditorConnector = get_open_connector(type);
+	
+	# Get other connector of different type
+	var other_connector : TechTreeEditorConnector = other_node.get_open_connector((type + 1) % 
+		TechTreeEditorConnector.ConnectorType.size());
 	
 	if(connector and other_connector):
 		connect_with(connector, other_connector);
@@ -266,11 +273,15 @@ func connect_with(base: TechTreeEditorConnector, other : TechTreeEditorConnector
 	var other_node : TechTreeNodeEditor = other.owner_node;
 	
 	if(base.Type == TechTreeEditorConnector.ConnectorType.Parent):
-		other_node.data.next_nodes.append(data.index);
-		data.parent_nodes.append(other_node.data.index);
+		if(!other_node.data.next_nodes.has(data.index)):
+			other_node.data.next_nodes.append(data.index);
+		if(!data.parent_nodes.has(other_node.data.index)):
+			data.parent_nodes.append(other_node.data.index);
 	else:
-		other_node.data.parent_nodes.append(data.index);
-		data.next_nodes.append(other_node.data.index);
+		if(!other_node.data.parent_nodes.has(data.index)):
+			other_node.data.parent_nodes.append(data.index);
+		if(!data.next_nodes.has(other_node.data.index)):
+			data.next_nodes.append(other_node.data.index);
 	
 	connections_changed.emit(self, data.parent_nodes, data.next_nodes);
 	other_node.connections_changed.emit(other_node, other_node.data.parent_nodes, other_node.data.next_nodes);

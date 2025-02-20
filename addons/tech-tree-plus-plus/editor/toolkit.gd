@@ -39,6 +39,9 @@ func _ready() -> void:
 	
 	if(SaveButton):
 		SaveButton.pressed.connect(start_picking_folder);
+	
+	if(LoadButton):
+		LoadButton.pressed.connect(start_loading_file);
 
 
 # Functions
@@ -114,18 +117,35 @@ func save(location : String) -> void:
 		print_rich("[color=green]Successfully saved tree data at " + location + "[/color]");
 	
 
+func start_loading_file() -> void:
+	var popup : EditorFileDialog = EditorFileDialog.new();
+	popup.access = EditorFileDialog.ACCESS_RESOURCES;
+	popup.file_mode = EditorFileDialog.FILE_MODE_OPEN_FILE;
+	popup.add_filter("*.tres, *.res", "Resource File");
+	
+	add_child(popup);
+	
+	popup.popup_file_dialog();
+	popup.file_selected.connect(func (path : String):
+		load_tree(path);
+		popup.queue_free();
+		);
+
+
 func load_tree(location : String) -> void:
 	
+	
 	var result : Resource = ResourceLoader.load(location);
+	print_rich("[color=blue]File loading...[/color]");
 	
 	if(result is TechTreeData):
-		load_dict(result.data);
+		load_dict(result.data, location);
 
 
-func load_dict(data : Dictionary) -> void:
+func load_dict(data : Dictionary, path : String) -> void:
 	
 	var node_data = data["node_data"];
-	root_nodes = data["root_nodes"];
+	root_nodes = data["root_nodes"].duplicate();
 	
 	# Load all of the nodes
 	var largest_id : int = 0;
@@ -144,6 +164,8 @@ func load_dict(data : Dictionary) -> void:
 		
 		nodes[node_data[node]["index"]] = node_data[node];
 		node_editor.load_from_data(node_data[node]);
+		
+		print_rich("[color=gray]Loaded " + str(node_data[node]["index"]) +"[/color]");
 	
 	# Set next index
 	next_node_id = largest_id + 1;
@@ -155,7 +177,6 @@ func load_dict(data : Dictionary) -> void:
 		# Connect parents
 		for parent in current_data["parents"]:
 			node_editors[current_data["index"]].connect_to(node_editors[parent], TechTreeEditorConnector.ConnectorType.Parent);
-		
-		# Connect children
-		for child in current_data["children"]:
-			node_editors[current_data["index"]].connect_to(node_editors[child], TechTreeEditorConnector.ConnectorType.Child);
+		# No need to connect children since all children require a different node to be a parent.
+	
+	print_rich("[color=green]Successfully loaded " + path + " ![/color]");
