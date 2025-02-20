@@ -2,7 +2,7 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://c3tkpcx3rj04p"
+uid="uid://5nliy4rgjlsj"
 path="res://.godot/imported/OpenSans-VariableFont_wdth,wght.ttf-bd4539b255b4b80b5ed6aca2207c27d2.fontdata"
 
 [deps]
@@ -23,9 +23,9 @@ allow_system_fallback=true
 force_autohinter=false
 hinting=2
 subpixel_positioning=3
-oversampling=4.0
+oversampling=0.0
 Fallbacks=null
-fallbacks=[Resource("res://addons/tech-tree-plus-plus/assets/standard_font.tres")]
+fallbacks=[]
 Compress=null
 compress=false
 preload=[]

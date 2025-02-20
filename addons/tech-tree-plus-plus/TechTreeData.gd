@@ -7,4 +7,4 @@ class_name TechTreeData
 
 # Stores a dictionary for each node in the tree, with root
 # nodes being at the start.
-@export_storage var nodes : Array[Dictionary];
+@export_storage var data : Dictionary;

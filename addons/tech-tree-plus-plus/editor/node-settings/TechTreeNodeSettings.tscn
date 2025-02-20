@@ -21,7 +21,7 @@ bg_color = Color(0.956528, 0.387862, 0.375172, 1)
 corner_radius_top_right = 8
 corner_radius_bottom_left = 8
 
-[node name="TechTreeNodeSettings" type="PanelContainer" node_paths=PackedStringArray("DragTab", "DeleteButton", "ParentConnectorContainer", "ChildConnectorContainer", "AddParentButton", "AddChildButton", "UnlockDropdown", "ProgressRequirementContainer", "ProgressRequirementBox", "TierCountBox", "TierCostContainer") groups=["GTechTreeCamera"]]
+[node name="TechTreeNodeSettings" type="PanelContainer" node_paths=PackedStringArray("DragTab", "DeleteButton", "TitleField", "IDLabel", "ParentConnectorContainer", "ChildConnectorContainer", "AddParentButton", "AddChildButton", "UnlockDropdown", "ProgressRequirementContainer", "ProgressRequirementBox", "TierCountBox", "TierCostContainer") groups=["GTechTreeCamera"]]
 custom_minimum_size = Vector2(100, 100)
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -29,6 +29,8 @@ theme = ExtResource("1_i6wqs")
 script = ExtResource("1_4yt8d")
 DragTab = NodePath("VBoxContainer/HBoxContainer/DragTab")
 DeleteButton = NodePath("VBoxContainer/HBoxContainer/DeleteButton")
+TitleField = NodePath("VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent/TitleContainer/TitleEdit")
+IDLabel = NodePath("VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent/TitleContainer/IDLabel")
 ParentConnectorContainer = NodePath("VBoxContainer/MarginContainer/HBoxContainer/ParentSlots")
 ChildConnectorContainer = NodePath("VBoxContainer/MarginContainer/HBoxContainer/ChildSlots")
 AddParentButton = NodePath("VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent/ConnectionButtons/AddParentButton")
@@ -88,14 +90,26 @@ layout_mode = 2
 [node name="SettingsContent" type="VBoxContainer" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="LineEdit" type="LineEdit" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent"]
+[node name="TitleContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent"]
 layout_mode = 2
+
+[node name="TitleEdit" type="LineEdit" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent/TitleContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 4
 placeholder_text = "Node Title"
 context_menu_enabled = false
 virtual_keyboard_enabled = false
 drag_and_drop_selection_enabled = false
 select_all_on_focus = true
+
+[node name="IDLabel" type="RichTextLabel" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent/TitleContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+text = "ID: #"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
 
 [node name="ConnectionButtons" type="HBoxContainer" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent"]
 layout_mode = 2

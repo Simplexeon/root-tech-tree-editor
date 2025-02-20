@@ -2,11 +2,21 @@
 extends PanelContainer
 class_name TechTreeNodeEditor
 
+# Signals
+
+signal connections_changed(node : TechTreeNodeEditor, 
+	parents : Array[int], children : Array[int]);
+
+signal data_changed(data : TechTreeNode);
+
+
 # Properties
 
 @export_subgroup("Elements")
 @export var DragTab : Button;
 @export var DeleteButton : Button;
+@export var TitleField : LineEdit;
+@export var IDLabel : RichTextLabel;
 @export var ParentConnectorContainer : Control;
 @export var ChildConnectorContainer : Control;
 @export var AddParentButton : Button;
@@ -44,6 +54,9 @@ func _ready() -> void:
 	
 	# Setup UI
 	
+	if(TitleField):
+		TitleField.text_changed.connect(change_name);
+	
 	if(AddParentButton):
 		AddParentButton.pressed.connect(add_parent_connector);
 	
@@ -71,6 +84,9 @@ func _ready() -> void:
 func setup(index : int) -> void:
 	data.set_id(index);
 	
+	if(IDLabel):
+		IDLabel.text = "ID: " + str(index);
+	
 	if(ParentConnectorContainer):
 		for connector in ParentConnectorContainer.get_children():
 			connector.setup(TechTreeEditorConnector.ConnectorType.Parent, data.index, self);
@@ -79,8 +95,11 @@ func setup(index : int) -> void:
 
 func _on_drag_tab_move(relative : Vector2) -> void:
 	global_position += relative * (1.0 / zoom.x);
+	data.editor_pos = global_position;
 	
 	update_connectors();
+	
+	data_changed.emit(data);
 
 
 
@@ -98,6 +117,12 @@ func delete() -> void:
 				disconnect_from(connector, connector.connected_to);
 	
 	queue_free();
+
+
+func change_name(new_name : String) -> void:
+	data.name = new_name;
+	data_changed.emit(data);
+
 
 func add_parent_connector() -> void:
 	
@@ -130,23 +155,33 @@ func connect_with(base: TechTreeEditorConnector, other : TechTreeEditorConnector
 	base.connected_to = other;
 	other.connected_to = base;
 	
+	var other_node : TechTreeNodeEditor = other.owner_node;
+	
 	if(base.Type == TechTreeEditorConnector.ConnectorType.Parent):
-		other.owner_node.data.parent_nodes.append(data);
-		data.next_nodes.append(other.owner_node.data);
+		other_node.data.next_nodes.append(data.index);
+		data.parent_nodes.append(other_node.data.index);
 	else:
-		other.owner_node.data.next_nodes.append(data);
-		data.parent_nodes.append(other.owner_node.data);
+		other_node.data.parent_nodes.append(data.index);
+		data.next_nodes.append(other_node.data.index);
+	
+	connections_changed.emit(self, data.parent_nodes, data.next_nodes);
+	other_node.connections_changed.emit(other_node, other_node.data.parent_nodes, other_node.data.next_nodes);
 
 func disconnect_from(base: TechTreeEditorConnector, other : TechTreeEditorConnector) -> void:
 	base.connected_to = null;
 	other.connected_to = null;
 	
+	var other_node : TechTreeNodeEditor = other.owner_node;
+	
 	if(base.Type == TechTreeEditorConnector.ConnectorType.Parent):
-		other.owner_node.data.parent_nodes.erase(data);
-		data.next_nodes.erase(other.owner_node.data);
+		other_node.data.next_nodes.erase(data.index);
+		data.parent_nodes.erase(other_node.data.index);
 	else:
-		other.owner_node.data.next_nodes.erase(data);
-		data.parent_nodes.erase(other.owner_node.data);
+		other_node.data.parent_nodes.erase(data.index);
+		data.next_nodes.erase(other_node.data.index);
+	
+	connections_changed.emit(self, data.parent_nodes, data.next_nodes);
+	other_node.connections_changed.emit(other_node, other_node.data.parent_nodes, other_node.data.next_nodes);
 
 
 func update_connectors() -> void:
@@ -176,7 +211,7 @@ func set_tiers(tier_count : int) -> void:
 			tier_cost.setup(count);
 			tier_cost.tier_cost_changed.connect(tier_cost_changed);
 			
-			data.unlock_requirements.append(0);
+			data.tier_values.append(0);
 			
 			count += 1;
 		
@@ -185,13 +220,18 @@ func set_tiers(tier_count : int) -> void:
 			TierCostContainer.remove_child(tier_cost_container_children[count - 1]);
 			tier_cost_container_children[count - 1].queue_free();
 			
-			data.unlock_requirements.pop_back();
+			data.tier_values.pop_back();
 			
 			count -= 1;
+	
+	data_changed.emit(data);
+
 
 
 func tier_cost_changed(tier_index : int, cost : int) -> void:
-	data.unlock_requirements[tier_index] = cost;
+	data.tier_values[tier_index] = cost;
+	data_changed.emit(data);
+
 
 func set_unlock_requirement(unlock_requirement : TechTreeNode.AvailabilityRequirement) -> void:
 	data.availability = unlock_requirement;
@@ -206,6 +246,11 @@ func set_unlock_requirement(unlock_requirement : TechTreeNode.AvailabilityRequir
 	if(ProgressRequirementBox):
 		data.availability_min = ProgressRequirementBox.value;
 	
+	data_changed.emit(data);
+
+
 
 func set_progress_requirement(amount : int) -> void:
 	data.availability_min = amount;
+	data_changed.emit(data);
+

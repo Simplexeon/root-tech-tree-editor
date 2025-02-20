@@ -49,7 +49,7 @@ render_target_update_mode = 4
 
 [node name="Area" parent="Overlay/GraphArea/TreeViewport" instance=ExtResource("2_qxfyu")]
 
-[node name="Toolkit" type="PanelContainer" parent="Overlay" node_paths=PackedStringArray("AddNodeButton", "EditorArea")]
+[node name="Toolkit" type="PanelContainer" parent="Overlay" node_paths=PackedStringArray("AddNodeButton", "EditorArea", "SaveButton", "LoadButton")]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.209
@@ -60,38 +60,56 @@ offset_bottom = 70.0
 grow_horizontal = 2
 mouse_force_pass_scroll_events = false
 script = ExtResource("3_x1n0j")
-AddNodeButton = NodePath("MarginContainer/Menu/CreateNodeButton")
+AddNodeButton = NodePath("MarginContainer/Menu/Tools/ToolContainer/CreateNodeButton")
 EditorArea = NodePath("../GraphArea/TreeViewport/Area")
+SaveButton = NodePath("MarginContainer/Menu/Files/FileSettings/HBoxContainer/Save")
+LoadButton = NodePath("MarginContainer/Menu/Files/FileSettings/HBoxContainer/Load")
 NodeEditorScene = ExtResource("4_p06f2")
 
 [node name="MarginContainer" type="MarginContainer" parent="Overlay/Toolkit"]
 layout_mode = 2
 
-[node name="Menu" type="VBoxContainer" parent="Overlay/Toolkit/MarginContainer"]
+[node name="Menu" type="TabContainer" parent="Overlay/Toolkit/MarginContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+current_tab = 0
 
-[node name="Files" type="HBoxContainer" parent="Overlay/Toolkit/MarginContainer/Menu"]
+[node name="Files" type="MarginContainer" parent="Overlay/Toolkit/MarginContainer/Menu"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="FileSettings" type="VBoxContainer" parent="Overlay/Toolkit/MarginContainer/Menu/Files"]
 layout_mode = 2
 
-[node name="Save" type="Button" parent="Overlay/Toolkit/MarginContainer/Menu/Files"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Overlay/Toolkit/MarginContainer/Menu/Files/FileSettings"]
+layout_mode = 2
+
+[node name="Save" type="Button" parent="Overlay/Toolkit/MarginContainer/Menu/Files/FileSettings/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 text = "Save"
 
-[node name="Spacer" type="Control" parent="Overlay/Toolkit/MarginContainer/Menu/Files"]
+[node name="Spacer" type="Control" parent="Overlay/Toolkit/MarginContainer/Menu/Files/FileSettings/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.2
 
-[node name="Load" type="Button" parent="Overlay/Toolkit/MarginContainer/Menu/Files"]
+[node name="Load" type="Button" parent="Overlay/Toolkit/MarginContainer/Menu/Files/FileSettings/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 text = "Load"
 
-[node name="CreateNodeButton" type="Button" parent="Overlay/Toolkit/MarginContainer/Menu"]
+[node name="Tools" type="MarginContainer" parent="Overlay/Toolkit/MarginContainer/Menu"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="ToolContainer" type="VBoxContainer" parent="Overlay/Toolkit/MarginContainer/Menu/Tools"]
+layout_mode = 2
+
+[node name="CreateNodeButton" type="Button" parent="Overlay/Toolkit/MarginContainer/Menu/Tools/ToolContainer"]
 layout_mode = 2
 focus_mode = 0
 mouse_force_pass_scroll_events = false

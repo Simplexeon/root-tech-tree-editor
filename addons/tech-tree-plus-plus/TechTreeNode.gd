@@ -20,8 +20,8 @@ enum AvailabilityRequirement {
 
 # Data
 
-var next_nodes : Array[TechTreeNode];
-var parent_nodes : Array[TechTreeNode];
+var next_nodes : Array[int];
+var parent_nodes : Array[int];
 
 
 # Name of node
@@ -29,6 +29,14 @@ var name : String;
 
 # Unique index
 var index : int;
+
+# When this node becomes available to be unlocked
+var availability : AvailabilityRequirement;
+
+# A number to be used with the availability
+# If availability is tree progress, this is the amount of
+# progress needed to be available.
+var availability_min : int;
 
 # Number of upgradable levels of the node
 var tiers : int;
@@ -38,15 +46,13 @@ var unlocked_tiers : int;
 
 # The unlock requirements for each tier of the tech tree
 # Dictionary for each tier to allow for multiple resources
-var unlock_requirements : Array[int];
+var tier_values : Array[int];
 
-# When this node becomes available to be unlocked
-var availability : AvailabilityRequirement;
 
-# A number to be used with the availability
-# If availability is tree progress, this is the amount of
-# progress needed to be available.
-var availability_min : int;
+# Editor-only Data
+
+var editor_pos : Vector2;
+
 
 
 # Processes
@@ -59,12 +65,15 @@ func _init() -> void:
 	
 	index = 0;
 	
-	tiers = 1;
+	tiers = 0;
 	unlocked_tiers = 0;
 	
-	unlock_requirements = [0];
+	tier_values = [];
 	
 	availability = AvailabilityRequirement.OneParent;
+	
+	
+	editor_pos = Vector2.ZERO;
 
 
 # Functions
@@ -86,22 +95,15 @@ func add_parent_node(parent : TechTreeNode) -> void:
 # Common usage in saving or printing to console
 func get_data() -> Dictionary:
 	
-	var parent_list : String = "";
-	
-	for parent in parent_nodes:
-		parent_list += parent.name + ", ";
-	
-	var child_list : String = "";
-	
-	for child in next_nodes:
-		child_list += child.name + ", ";
-	
 	return {
 		"name": name,
 		"index": index,
-		"parents": parent_list,
-		"children": child_list,
-		"tiers": tiers,
+		"parents": parent_nodes,
+		"children": next_nodes,
 		"availability": AvailabilityRequirement.keys()[availability],
+		"progress_min": availability_min,
+		"tiers": tiers,
+		"tier_values": tier_values,
 		
+		"editor_pos": editor_pos,
 	};
