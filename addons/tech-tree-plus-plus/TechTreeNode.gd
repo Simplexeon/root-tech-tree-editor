@@ -107,3 +107,19 @@ func get_data() -> Dictionary:
 		
 		"editor_pos": editor_pos,
 	};
+
+
+func load_data(data : Dictionary) -> void:
+	
+	name = data["name"];
+	index = data["index"];
+	parent_nodes = data["parents"];
+	next_nodes = data["children"];
+	availability = AvailabilityRequirement[data["availability"]];
+	availability_min = data["progress_min"];
+	tiers = data["tiers"];
+	tier_values = data["tier_values"];
+	
+	editor_pos = data["editor_pos"];
+	
+	pass; 
