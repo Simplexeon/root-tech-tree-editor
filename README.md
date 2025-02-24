@@ -9,7 +9,9 @@
  	- [TechTreeData](#techtreedata)
 
 ## Installation
-To install this plugin, place everything in the addons/ folder into your own project's addons folder. If there isn't an addons folder in your project, create one!
+To install this plugin, place everything in the release zip into your own project's addons folder. If there isn't an addons folder in your project, create one!
+
+[Download Plugin!](https://github.com/Simplexeon/root-tech-tree-editor/releases/latest)
 
 ## Overview
 Root Tech Tree Editor is an open-source Godot plugin that lets developers and designers easily create all sorts of different tech trees for their project. 
