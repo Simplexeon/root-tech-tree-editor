@@ -166,6 +166,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="NodeTitleDisplay" type="RichTextLabel" parent="CanvasLayer/Overlay/CenterContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 theme_type_variation = &"RichTextLabelHeader"
 text = "Node Title"
@@ -174,9 +175,10 @@ scroll_active = false
 autowrap_mode = 0
 
 [node name="NodeDescriptionDisplay" type="RichTextLabel" parent="CanvasLayer/Overlay/CenterContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
-text = "Node Title"
-fit_content = true
+size_flags_vertical = 3
+text = "Node description"
 autowrap_mode = 2
 
 [node name="SpentAmountDisplay" type="RichTextLabel" parent="CanvasLayer/Overlay/CenterContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer2"]
