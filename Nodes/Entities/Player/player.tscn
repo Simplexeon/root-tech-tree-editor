@@ -1,9 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://ce1f0kuejodj1"]
+[gd_scene load_steps=10 format=3 uid="uid://ce1f0kuejodj1"]
 
 [ext_resource type="Texture2D" uid="uid://d4g4o1cbuxjuh" path="res://icon.svg" id="1_3w6f0"]
 [ext_resource type="Script" path="res://Nodes/Entities/Player/player.gd" id="1_m4suu"]
 [ext_resource type="PackedScene" uid="uid://dqto8hvmjc00y" path="res://Nodes/Entities/Player/Camera/camera.tscn" id="3_728lh"]
-[ext_resource type="Script" path="res://addons/tech-tree-plus-plus/TechTreeRoot.gd" id="4_cuo2j"]
+[ext_resource type="Script" path="res://addons/root-tech-tree-editor/TechTreeRoot.gd" id="4_qpyp3"]
+[ext_resource type="Theme" uid="uid://b8ncg82ykmq8w" path="res://addons/root-tech-tree-editor/assets/tech_tree_overlay_theme.tres" id="5_juvmd"]
+[ext_resource type="Script" path="res://Nodes/Entities/Player/overlay.gd" id="6_v1ads"]
+[ext_resource type="Resource" uid="uid://w8fqk2kyvpdn" path="res://Assets/TechTrees/SilentKillerTechTree.tres" id="7_srwil"]
+[ext_resource type="PackedScene" uid="uid://dvjjfwn7cfw1f" path="res://Nodes/UI/TechTree/node_button.tscn" id="7_wsp4r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ips3"]
 size = Vector2(40, 40)
@@ -34,8 +38,151 @@ scale = Vector2(0.2, 0.2)
 texture = ExtResource("1_3w6f0")
 
 [node name="Camera" parent="." instance=ExtResource("3_728lh")]
+zoom = Vector2(1, 1)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="TechTreeRoot" type="Node" parent="CanvasLayer"]
-script = ExtResource("4_cuo2j")
+script = ExtResource("4_qpyp3")
+
+[node name="Overlay" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("TreeRoot", "NodeTitle", "NodeDescription", "SpentAmountDisplay")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("5_juvmd")
+script = ExtResource("6_v1ads")
+TreeFile = ExtResource("7_srwil")
+TreeRoot = NodePath("../TechTreeRoot")
+NodeTitle = NodePath("CenterContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer2/NodeTitleDisplay")
+NodeDescription = NodePath("CenterContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer2/NodeDescriptionDisplay")
+SpentAmountDisplay = NodePath("CenterContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer2/SpentAmountDisplay")
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Overlay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -152.5
+offset_top = -189.5
+offset_right = 152.5
+offset_bottom = 189.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Overlay/CenterContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Overlay/CenterContainer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Overlay/CenterContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/CenterContainer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Overlay/CenterContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Overlay/CenterContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/CenterContainer"]
+layout_mode = 2
+theme_type_variation = &"RichTextLabelHeader"
+text = "Tech Tree"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Overlay/CenterContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Overlay/CenterContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="NodeButton5" parent="CanvasLayer/Overlay/CenterContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("RootNode", "TechTreeController") instance=ExtResource("7_wsp4r")]
+layout_mode = 2
+SkillID = 6
+RootNode = NodePath("../../../../../../../../../TechTreeRoot")
+TechTreeController = NodePath("../../../../../../../..")
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="CanvasLayer/Overlay/CenterContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="NodeButton4" parent="CanvasLayer/Overlay/CenterContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer4" node_paths=PackedStringArray("RootNode", "TechTreeController") instance=ExtResource("7_wsp4r")]
+layout_mode = 2
+SkillID = 2
+RootNode = NodePath("../../../../../../../../../TechTreeRoot")
+TechTreeController = NodePath("../../../../../../../..")
+
+[node name="NodeButton5" parent="CanvasLayer/Overlay/CenterContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer4" node_paths=PackedStringArray("RootNode", "TechTreeController") instance=ExtResource("7_wsp4r")]
+layout_mode = 2
+SkillID = 3
+RootNode = NodePath("../../../../../../../../../TechTreeRoot")
+TechTreeController = NodePath("../../../../../../../..")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/Overlay/CenterContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="NodeButton2" parent="CanvasLayer/Overlay/CenterContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer2" node_paths=PackedStringArray("RootNode", "TechTreeController") instance=ExtResource("7_wsp4r")]
+layout_mode = 2
+SkillID = 4
+RootNode = NodePath("../../../../../../../../../TechTreeRoot")
+TechTreeController = NodePath("../../../../../../../..")
+
+[node name="NodeButton3" parent="CanvasLayer/Overlay/CenterContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer2" node_paths=PackedStringArray("RootNode", "TechTreeController") instance=ExtResource("7_wsp4r")]
+layout_mode = 2
+SkillID = 5
+RootNode = NodePath("../../../../../../../../../TechTreeRoot")
+TechTreeController = NodePath("../../../../../../../..")
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/Overlay/CenterContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+alignment = 1
+
+[node name="NodeButton" parent="CanvasLayer/Overlay/CenterContainer/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer/VBoxContainer/HBoxContainer3" node_paths=PackedStringArray("RootNode", "TechTreeController") instance=ExtResource("7_wsp4r")]
+layout_mode = 2
+SkillID = 1
+RootNode = NodePath("../../../../../../../../../TechTreeRoot")
+TechTreeController = NodePath("../../../../../../../..")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Overlay/CenterContainer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/Overlay/CenterContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="NodeTitleDisplay" type="RichTextLabel" parent="CanvasLayer/Overlay/CenterContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer2"]
+layout_mode = 2
+theme_type_variation = &"RichTextLabelHeader"
+text = "Node Title"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="NodeDescriptionDisplay" type="RichTextLabel" parent="CanvasLayer/Overlay/CenterContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Node Title"
+fit_content = true
+autowrap_mode = 2
+
+[node name="SpentAmountDisplay" type="RichTextLabel" parent="CanvasLayer/Overlay/CenterContainer/PanelContainer/MarginContainer/HBoxContainer/MarginContainer/VBoxContainer2"]
+clip_contents = false
+layout_mode = 2
+text = "Spent Points: "
+fit_content = true
+scroll_active = false
+autowrap_mode = 0

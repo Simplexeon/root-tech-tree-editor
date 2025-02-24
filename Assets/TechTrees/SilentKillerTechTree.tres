@@ -1,0 +1,113 @@
+[gd_resource type="Resource" script_class="TechTreeData" load_steps=2 format=3 uid="uid://w8fqk2kyvpdn"]
+
+[ext_resource type="Script" path="res://addons/root-tech-tree-editor/TechTreeData.gd" id="1_lc113"]
+
+[resource]
+script = ExtResource("1_lc113")
+data = {
+"node_data": {
+1: {
+"additional_data": {
+"additional_data_test": "2"
+},
+"availability": "OneParent",
+"children": Array[int]([4, 5]),
+"description": "BASIC: 1 Point
+Gain 30% move speed when your armor breaks.
+ACE: 3 Points
+This effect applies to your crew as well.",
+"editor_pos": Vector2(-345, -168),
+"index": 1,
+"name": "Second Wind",
+"parents": Array[int]([]),
+"progress_min": 0,
+"tier_values": Array[int]([1, 3]),
+"tiers": 2,
+"unlocked_tiers": 0
+},
+2: {
+"additional_data": {},
+"availability": "TreeProgress",
+"children": Array[int]([6]),
+"description": "BASIC: 3 Points
+Gain up to 30% crit chance for every detection point less than 35 detection risk.
+ACE: 6 Points",
+"editor_pos": Vector2(986.675, -387.774),
+"index": 2,
+"name": "Low Blow",
+"parents": Array[int]([4, 5]),
+"progress_min": 3,
+"tier_values": Array[int]([3, 6]),
+"tiers": 2,
+"unlocked_tiers": 0
+},
+3: {
+"additional_data": {},
+"availability": "TreeProgress",
+"children": Array[int]([6]),
+"description": "BASIC: 3 Points
+Marked targets take an additional 15% damage.
+ACE: 6 Points",
+"editor_pos": Vector2(995.328, 96.2911),
+"index": 3,
+"name": "High Value Target",
+"parents": Array[int]([4, 5]),
+"progress_min": 3,
+"tier_values": Array[int]([3, 6]),
+"tiers": 2,
+"unlocked_tiers": 0
+},
+4: {
+"additional_data": {},
+"availability": "TreeProgress",
+"children": Array[int]([2, 3]),
+"description": "BASIC: 2 Points
+You are less likely to be targeted by enemies.
+ACE: 4 Points",
+"editor_pos": Vector2(316.419, -427.356),
+"index": 4,
+"name": "Optical Illusions",
+"parents": Array[int]([1]),
+"progress_min": 1,
+"tier_values": Array[int]([2, 4]),
+"tiers": 2,
+"unlocked_tiers": 0
+},
+5: {
+"additional_data": {},
+"availability": "TreeProgress",
+"children": Array[int]([2, 3]),
+"description": "BASIC: 2 Points
+You gain weapon stability with silenced weapons.
+ACE: 4 Points",
+"editor_pos": Vector2(303.77, 76.3887),
+"index": 5,
+"name": "The Professional",
+"parents": Array[int]([1]),
+"progress_min": 1,
+"tier_values": Array[int]([2, 4]),
+"tiers": 2,
+"unlocked_tiers": 0
+},
+6: {
+"additional_data": {
+"crit_bonus_amount": "35",
+"crit_bonus_timer": "4"
+},
+"availability": "TreeProgress",
+"children": Array[int]([]),
+"description": "BASIC: 4 Points
+If you do not lose any armor or health for 4 seconds, you gain 35% critical hit chance for 6 seconds.
+ACE: 8 Points",
+"editor_pos": Vector2(1626.67, -158.75),
+"index": 6,
+"name": "Unseen Strike",
+"parents": Array[int]([2, 3]),
+"progress_min": 16,
+"tier_values": Array[int]([4, 8]),
+"tiers": 2,
+"unlocked_tiers": 0
+}
+},
+"root_nodes": Array[int]([1])
+}

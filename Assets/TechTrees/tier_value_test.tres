@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="TechTreeData" load_steps=2 format=3 uid="uid://dqe8u1c5swh28"]
+
+[ext_resource type="Script" path="res://addons/tech-tree-plus-plus/TechTreeData.gd" id="1_epd2w"]
+
+[resource]
+script = ExtResource("1_epd2w")
+data = {
+"node_data": {
+1: {
+"availability": "OneParent",
+"children": Array[int]([2]),
+"editor_pos": Vector2(0, 0),
+"index": 1,
+"name": "Swordsmanship",
+"parents": Array[int]([]),
+"progress_min": 0,
+"tier_values": Array[int]([1, 2, 4]),
+"tiers": 3,
+"unlocked_tiers": 0
+},
+2: {
+"availability": "OneParent",
+"children": Array[int]([3]),
+"editor_pos": Vector2(533.869, 3.5119),
+"index": 2,
+"name": "Node Name",
+"parents": Array[int]([1]),
+"progress_min": 0,
+"tier_values": Array[int]([2]),
+"tiers": 1,
+"unlocked_tiers": 0
+},
+3: {
+"availability": "OneParent",
+"children": Array[int]([]),
+"editor_pos": Vector2(1026.19, -2.38094),
+"index": 3,
+"name": "Node Name",
+"parents": Array[int]([2]),
+"progress_min": 0,
+"tier_values": Array[int]([2, 3]),
+"tiers": 2,
+"unlocked_tiers": 0
+}
+},
+"root_nodes": Array[int]([1])
+}

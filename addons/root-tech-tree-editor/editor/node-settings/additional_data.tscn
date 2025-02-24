@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://clqx6we3ohti4"]
+
+[ext_resource type="Script" path="res://addons/root-tech-tree-editor/editor/node-settings/additional_data.gd" id="1_uve5r"]
+
+[node name="AdditionalData" type="VBoxContainer" node_paths=PackedStringArray("NameEdit", "DataEdit")]
+script = ExtResource("1_uve5r")
+TextTimeout = 0.5
+NameEdit = NodePath("LineEdit")
+DataEdit = NodePath("TextEdit")
+
+[node name="LineEdit" type="LineEdit" parent="."]
+layout_mode = 2
+placeholder_text = "Additional Data Name"
+expand_to_text_length = true
+
+[node name="TextEdit" type="TextEdit" parent="."]
+layout_mode = 2
+placeholder_text = "Additional data"
+wrap_mode = 1
+scroll_fit_content_height = true
+draw_tabs = true
+
+[connection signal="text_changed" from="LineEdit" to="." method="_text_changed" unbinds=1]
+[connection signal="text_changed" from="TextEdit" to="." method="_text_changed"]

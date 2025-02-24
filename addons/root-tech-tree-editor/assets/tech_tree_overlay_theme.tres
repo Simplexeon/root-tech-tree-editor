@@ -1,0 +1,62 @@
+[gd_resource type="Theme" load_steps=8 format=3 uid="uid://b8ncg82ykmq8w"]
+
+[ext_resource type="FontVariation" uid="uid://buskxlbqhx6p0" path="res://addons/root-tech-tree-editor/assets/default_font.tres" id="1_hbaij"]
+[ext_resource type="SystemFont" uid="uid://u1ljbos3jvar" path="res://addons/root-tech-tree-editor/assets/fallback_font.tres" id="2_82hfn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_42lco"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eix1i"]
+bg_color = Color(0.144063, 0.144063, 0.144062, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l7d6j"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nbad6"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_has6c"]
+bg_color = Color(0, 0, 0, 0.592157)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[resource]
+default_font = ExtResource("1_hbaij")
+Button/fonts/font = ExtResource("1_hbaij")
+Button/styles/focus = SubResource("StyleBoxEmpty_42lco")
+Button/styles/hover = SubResource("StyleBoxFlat_eix1i")
+Button/styles/normal = SubResource("StyleBoxFlat_l7d6j")
+Button/styles/pressed = SubResource("StyleBoxFlat_nbad6")
+Label/fonts/font = ExtResource("1_hbaij")
+MarginContainer/constants/margin_bottom = 5
+MarginContainer/constants/margin_left = 5
+MarginContainer/constants/margin_right = 5
+MarginContainer/constants/margin_top = 5
+OptionButton/constants/align_to_largest_stylebox = 1
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_has6c")
+RichTextLabel/fonts/normal_font = ExtResource("1_hbaij")
+RichTextLabelHeader/base_type = &"RichTextLabel"
+RichTextLabelHeader/font_sizes/normal_font_size = 24
+Window/font_sizes/title_font_size = 16
+Window/fonts/title_font = ExtResource("2_82hfn")

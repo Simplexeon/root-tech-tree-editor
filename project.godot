@@ -26,7 +26,7 @@ window/stretch/scale_mode="integer"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/tech-tree-plus-plus/plugin.cfg")
+enabled=PackedStringArray("res://addons/root-tech-tree-editor/plugin.cfg")
 
 [global_group]
 
@@ -34,6 +34,7 @@ GTechTreeConnector=""
 
 [gui]
 
+theme/custom="res://addons/root-tech-tree-editor/assets/tech_tree_overlay_theme.tres"
 theme/default_font_generate_mipmaps=true
 
 [input]

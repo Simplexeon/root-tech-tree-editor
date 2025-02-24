@@ -1,0 +1,40 @@
+[gd_scene load_steps=9 format=3 uid="uid://dvjjfwn7cfw1f"]
+
+[ext_resource type="Texture2D" uid="uid://dveifsbqmuejw" path="res://addons/root-tech-tree-editor/assets/connection_unfilled.png" id="1_c457w"]
+[ext_resource type="Script" path="res://Nodes/UI/TechTree/node_button.gd" id="2_kaibo"]
+[ext_resource type="Texture2D" uid="uid://djwvchlnj3gp1" path="res://addons/root-tech-tree-editor/assets/connection_unfilled_hovered.png" id="3_07u3u"]
+[ext_resource type="Texture2D" uid="uid://cutnrtx0opnox" path="res://addons/root-tech-tree-editor/assets/connection_unfilled_pressed.png" id="4_no0xj"]
+[ext_resource type="Texture2D" uid="uid://bsjsq5p0c6ubj" path="res://addons/root-tech-tree-editor/assets/connection_filled.png" id="5_7lpsm"]
+[ext_resource type="Texture2D" uid="uid://cjd0fwapouuyw" path="res://addons/root-tech-tree-editor/assets/connection_filled_hovered.png" id="6_asrda"]
+[ext_resource type="Texture2D" uid="uid://b2ccbcv8a0qeh" path="res://addons/root-tech-tree-editor/assets/connection_filled_pressed.png" id="7_cvo1q"]
+[ext_resource type="Texture2D" uid="uid://ckvui13bpcv3u" path="res://Assets/Icons/aced_bg.png" id="8_qv4rf"]
+
+[node name="NodeButton" type="TextureButton" node_paths=PackedStringArray("BGTextureRect")]
+custom_minimum_size = Vector2(80, 80)
+size_flags_horizontal = 6
+texture_normal = ExtResource("1_c457w")
+ignore_texture_size = true
+stretch_mode = 4
+script = ExtResource("2_kaibo")
+BGTextureRect = NodePath("BGTexture")
+RegularTexture = ExtResource("1_c457w")
+RegularHoverTexture = ExtResource("3_07u3u")
+RegularPressTexture = ExtResource("4_no0xj")
+FilledTexture = ExtResource("5_7lpsm")
+FilledHoverTexture = ExtResource("6_asrda")
+FilledPressTexture = ExtResource("7_cvo1q")
+Tier2BG = ExtResource("8_qv4rf")
+
+[node name="BGTexture" type="TextureRect" parent="."]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 4
+
+[connection signal="mouse_entered" from="." to="." method="_hover"]
+[connection signal="pressed" from="." to="." method="_when_pressed"]
