@@ -15,9 +15,12 @@ To install this plugin, place everything in the addons/ folder into your own pro
 Root Tech Tree Editor is an open-source Godot plugin that lets developers and designers easily create all sorts of different tech trees for their project. 
 Because Root is intended to be a generic tech tree implementation, users are expected to design their tech tree UI themselves. A simple example UI can be found in the demo project, which can be imported by downloading this repo. 
 
-[Node in editor](/Assets/Screenshots/root-in-scenetree.png)
+![Node in editor](/Assets/Screenshots/root-in-scenetree.png)
+
 Root provides a new custom node to Godot, labelled TechTreeRoot. This node can be interfaced with to interact with the tech tree and read its data. It allows you to load a tech tree file, unlock nodes, and also save modified tech tree data. 
-[Editor view](/Assets/Screenshots/editor.png)
+
+![Editor view](/Assets/Screenshots/editor.png)
+
 Root also provides a new main screen, the Tech Tree Editor. This allows users to easily edit and save their tech trees within the Godot editor.
 
 ## Features
