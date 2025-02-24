@@ -4,6 +4,9 @@
 - [Overview](#overview)
 - [Features](#features)
 - [Documentation](#documentation)
+	- [TechTreeRoot](#techtreeroot)
+ 	- [TechTreeNode](#techtreenode)
+ 	- [TechTreeData](#techtreedata)
 
 ## Installation
 To install this plugin, place everything in the addons/ folder into your own project's addons folder. If there isn't an addons folder in your project, create one!
@@ -31,7 +34,8 @@ Root also provides a new main screen, the Tech Tree Editor. This allows users to
 
 ## Documentation
 
-### TechTreeRoot ![Plugin logo](/addons/root-tech-tree-editor/assets/root_icon.svg)
+### TechTreeRoot
+![Plugin logo](/addons/root-tech-tree-editor/assets/root_icon.svg)
 This node is used to interface with the Root plugin. It can be used to get tree information, as well as load and save tree data.
 
 #### Signals
@@ -168,3 +172,9 @@ Dictionary is formatted as so:
 Load data from a dictionary formatted in the same way as the get_data method returns.
 
 ### TechTreeData
+
+#### Properties
+
+```data : Dictionary(String | Variant)```
+
+The dictionary data used to load a node.
