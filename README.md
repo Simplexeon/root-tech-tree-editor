@@ -1,7 +1,9 @@
 # Root Tech Tree Editor ![Plugin logo](/addons/root-tech-tree-editor/assets/root_icon.svg)
 
 - [Installation](#installation)
--
+- [Overview](#overview)
+- [Features](#features)
+- [Documentation](#documentation)
 
 ## Installation
 To install this plugin, place everything in the addons/ folder into your own project's addons folder. If there isn't an addons folder in your project, create one!
