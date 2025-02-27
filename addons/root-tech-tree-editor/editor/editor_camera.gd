@@ -35,5 +35,5 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 	
 	if(event is InputEventMouseMotion and dragging):
-		global_position += event.relative * Sensitivity * -1;
+		global_position += event.relative * Sensitivity * -1 * (1.0 / zoom.x);
 		DisplayServer.cursor_set_shape(DisplayServer.CursorShape.CURSOR_MOVE);
