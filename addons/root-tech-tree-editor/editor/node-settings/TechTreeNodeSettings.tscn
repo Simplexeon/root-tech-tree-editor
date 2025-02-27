@@ -202,6 +202,7 @@ layout_mode = 2
 [node name="DescriptionEdit" type="TextEdit" parent="VBoxContainer/MarginContainer/HBoxContainer/MarginContainer/SettingsContent"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
+mouse_force_pass_scroll_events = false
 text = "Node Description"
 wrap_mode = 1
 scroll_smooth = true

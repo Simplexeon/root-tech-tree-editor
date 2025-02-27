@@ -15,6 +15,7 @@ expand_to_text_length = true
 
 [node name="TextEdit" type="TextEdit" parent="."]
 layout_mode = 2
+mouse_force_pass_scroll_events = false
 placeholder_text = "Additional data"
 wrap_mode = 1
 scroll_fit_content_height = true

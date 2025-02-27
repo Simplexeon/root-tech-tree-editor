@@ -21,18 +21,15 @@ func _unhandled_input(event: InputEvent) -> void:
 			if(!dragging):
 				dragging = true;
 				pass;
-		
-		if((event.button_index == MOUSE_BUTTON_LEFT || 
-			event.button_index == MOUSE_BUTTON_MIDDLE) and event.is_released()):
-			if(dragging):
-				dragging = false;
+		else:
+			dragging = false;
 		
 		if(event.button_index == MOUSE_BUTTON_WHEEL_UP):
 			zoom += Vector2(ZoomStep, ZoomStep);
 		
 		if(event.button_index == MOUSE_BUTTON_WHEEL_DOWN):
 			zoom -= Vector2(ZoomStep, ZoomStep);
-		
+	
 	
 	if(event is InputEventMouseMotion and dragging):
 		global_position += event.relative * Sensitivity * -1 * (1.0 / zoom.x);
